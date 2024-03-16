@@ -8,8 +8,8 @@ datasource db {
 }
 
 model Portfolio {
-  id             Int      @id @default(autoincrement())
-  userId         Int      @unique
+  id             String   @id @default(uuid())
+  userId         String   @unique
   description    String
   coverImageLink String
   comments       Comment?
@@ -17,7 +17,7 @@ model Portfolio {
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(uuid())
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   email     String     @unique
@@ -29,8 +29,8 @@ model User {
 }
 
 model Comment {
-  id          Int       @id @default(autoincrement())
-  portfolioId Int       @unique
+  id          String    @id @default(uuid())
+  portfolioId String    @unique
   content     String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
