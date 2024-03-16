@@ -8,7 +8,7 @@ const Hero = () => {
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
           Share. Inspire. Get hired.
         </h1>
-        <p>
+        <p className="text-md md:text-lg">
           Devfolio is about developers sharing their portfolio as design
           inspiration and increase their employment probability.
         </p>
