@@ -10,9 +10,9 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  pages: {
-    signIn: "/sign-in",
-  },
+  // pages: {
+  //   signIn: "/sign-in",
+  // },
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -39,11 +39,10 @@ export const authOptions: NextAuthOptions = {
           );
 
           if (!passwordMatched) throw new Error("Incorrect password");
+          console.log(existingUser);
 
           return {
-            id: `${existingUser.id}`,
-            username: existingUser.username,
-            email: existingUser.email,
+            ...existingUser,
             error: null,
           };
         } catch (error) {
@@ -59,6 +58,8 @@ export const authOptions: NextAuthOptions = {
           ...token,
           username: user.username,
           id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
         };
       }
       return token;
@@ -68,6 +69,8 @@ export const authOptions: NextAuthOptions = {
         ...session,
         user: {
           ...session.user,
+          firstName: token.firstName,
+          lastName: token.lastName,
           username: token.username,
           id: token.id,
         },
