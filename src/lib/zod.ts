@@ -21,3 +21,9 @@ export const userServerSchema = z.object({
     .string({ required_error: "Password is required" })
     .min(6, "Password must be at least 6 characters"),
 });
+
+export const portfolioSchema = z.object({
+  userId: z.string({ required_error: "User ID is required" }),
+  description: z.string({ required_error: "Description is required" }),
+  coverImageLink: z.string({ required_error: "Cover image link is required" }),
+});
