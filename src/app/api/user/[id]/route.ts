@@ -45,3 +45,23 @@ export async function GET(req: Request, { params }: { params: Params }) {
     );
   }
 }
+
+export async function DELETE(req: Request, { params }: { params: Params }) {
+  try {
+    const { id } = params;
+
+    await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        active: false,
+      },
+    });
+
+    return NextResponse.json({
+      ok: true,
+      message: "Account deleted successfully",
+    });
+  } catch (error) {}
+}

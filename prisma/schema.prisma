@@ -26,6 +26,7 @@ model User {
   lastName  String
   username  String     @unique
   imageLink String?
+  active    Boolean    @default(true)
   portfolio Portfolio?
 }
 
