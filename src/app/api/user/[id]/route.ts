@@ -25,6 +25,16 @@ export async function GET(req: Request, { params }: { params: Params }) {
       },
     });
 
+    if (!user) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: `User with ID:${id} does not exist.`,
+        },
+        { status: 404 }
+      );
+    }
+
     // exclude password in returned data
     const { password: userPassword, ...rest } = user!;
 
@@ -50,6 +60,23 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    // check if user exists
+    if (!user) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: `User with ID:${id} does not exist.`,
+        },
+        { status: 404 }
+      );
+    }
+
     await prisma.user.update({
       where: {
         id,
@@ -59,9 +86,22 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
       },
     });
 
-    return NextResponse.json({
-      ok: true,
-      message: "Account deleted successfully",
-    });
-  } catch (error) {}
+    return NextResponse.json(
+      {
+        ok: true,
+        message: `Account with ID:${id} deleted successfully.`,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
 }

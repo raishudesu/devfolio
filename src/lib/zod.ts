@@ -27,3 +27,8 @@ export const portfolioSchema = z.object({
   description: z.string({ required_error: "Description is required" }),
   coverImageLink: z.string({ required_error: "Cover image link is required" }),
 });
+
+export const updatePortfolioSchema = z.object({
+  description: z.string().optional(),
+  coverImageLink: z.string().optional(),
+});

@@ -1,4 +1,6 @@
 {
   "vscord.app.name": "Visual Studio Code",
-  "vscord.status.problems.enabled": false
+  "vscord.status.problems.enabled": false,
+  "vscord.enabled": true,
+  "vscord.app.privacyMode.enable": false
 }
