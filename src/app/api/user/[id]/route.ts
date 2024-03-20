@@ -1,51 +1,47 @@
 import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { deleteUser, getUser } from "@/services/user.service";
 import { getServerSession } from "next-auth";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
+import { UserNotFoundError } from "@/utils/errors";
 
 export async function GET(req: Request, { params }: { params: Params }) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json(
-        {
-          ok: false,
-          message: "Unauthorized",
-        },
-        { status: 401 }
-      );
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session) {
+    //   return NextResponse.json(
+    //     {
+    //       ok: false,
+    //       message: "Unauthorized",
+    //     },
+    //     { status: 401 }
+    //   );
+    // }
 
     const { id } = params;
 
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        {
-          ok: false,
-          message: `User with ID:${id} does not exist.`,
-        },
-        { status: 404 }
-      );
-    }
-
-    // exclude password in returned data
-    const { password: userPassword, ...rest } = user!;
+    const user = await getUser(id);
 
     return NextResponse.json(
       {
         ok: true,
-        user: { ...rest },
+        user,
       },
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof UserNotFoundError) {
+      return NextResponse.json(
+        {
+          ok: error.ok,
+          errorName: error.name,
+          errorMessage: error.errorMessage,
+        },
+        { status: error.code }
+      );
+    }
+
     return NextResponse.json(
       {
         ok: false,
@@ -60,31 +56,7 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    // check if user exists
-    if (!user) {
-      return NextResponse.json(
-        {
-          ok: false,
-          message: `User with ID:${id} does not exist.`,
-        },
-        { status: 404 }
-      );
-    }
-
-    await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        active: false,
-      },
-    });
+    await deleteUser(id);
 
     return NextResponse.json(
       {
@@ -94,6 +66,17 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
       { status: 200 }
     );
   } catch (error) {
+    if (error instanceof UserNotFoundError) {
+      return NextResponse.json(
+        {
+          ok: error.ok,
+          errorName: error.name,
+          errorMessage: error.errorMessage,
+        },
+        { status: error.code }
+      );
+    }
+
     return NextResponse.json(
       {
         ok: false,
