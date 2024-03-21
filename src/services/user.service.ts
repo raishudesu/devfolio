@@ -8,6 +8,16 @@ import {
 import type { User } from "@prisma/client";
 import { z } from "zod";
 
+export const getAllUser = async () => {
+  try {
+    const users = await prisma.user.findMany();
+
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const existingUserByEmail = async (email: string) => {
   try {
     const existingEmail = await prisma.user.findUnique({
@@ -61,7 +71,8 @@ export const createUser = async (data: z.infer<typeof userServerSchema>) => {
       data,
     });
 
-    return user;
+    const { password: newUserPassword, ...userDetails } = user;
+    return userDetails;
   } catch (error) {
     throw error;
   }

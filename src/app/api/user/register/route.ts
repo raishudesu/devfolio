@@ -1,7 +1,11 @@
-import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import { userServerSchema } from "@/lib/zod";
+import { createUser } from "@/services/user.service";
+import {
+  ExistingUserByEmailError,
+  ExistingUserByUsername,
+} from "@/utils/errors";
 
 export async function POST(req: Request) {
   try {
@@ -10,53 +14,41 @@ export async function POST(req: Request) {
     const { email, username, firstName, lastName, password } =
       userServerSchema.parse(body); // VALIDATE BODY THRU ZOD SCHEMA
 
-    // CHECK UNIQUE EMAIL
-    const existingEmail = await prisma.user.findUnique({
-      where: { email: email },
-    });
-
-    if (existingEmail) {
-      return NextResponse.json(
-        { user: null, message: "A user with this email already exists" },
-        { status: 409 }
-      );
-    }
-
-    // CHECK UNIQUE USERNAME
-    const existingUsername = await prisma.user.findUnique({
-      where: { username: username },
-    });
-
-    if (existingUsername) {
-      return NextResponse.json(
-        { user: null, message: "A user with this username already exists" },
-        { status: 409 }
-      );
-    }
-
     // HASH PASSWORD
     const hashedPwd = await hash(password, 10);
 
-    const newUser = await prisma.user.create({
-      data: {
-        username,
-        firstName,
-        lastName,
-        email,
-        password: hashedPwd,
-      },
-    });
+    const bodyData = {
+      username,
+      firstName,
+      lastName,
+      email,
+      password: hashedPwd,
+    };
 
-    // EXCLUDE PASSWORD UPON SUCCESS RESPONSE
-    const { password: newUserPassword, ...rest } = newUser;
+    const newUser = await createUser(bodyData);
 
     return NextResponse.json(
-      { user: rest, message: "User created successfully" },
+      { user: newUser, message: "User created successfully" },
       { status: 201 }
     );
   } catch (error) {
+    if (
+      error instanceof ExistingUserByEmailError ||
+      error instanceof ExistingUserByUsername
+    ) {
+      return NextResponse.json(
+        {
+          ok: error.ok,
+          errorMessage: error.errorMessage,
+        },
+        {
+          status: error.code,
+        }
+      );
+    }
+
     return NextResponse.json(
-      { message: "Something went wrong", error },
+      { ok: false, message: "Something went wrong", error },
       { status: 500 }
     );
   }
