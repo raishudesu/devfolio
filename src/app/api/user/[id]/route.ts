@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/db";
-import { deleteUser, getUser } from "@/services/user.service";
+import { deleteUser, getUser, updateUser } from "@/services/user.service";
 import { getServerSession } from "next-auth";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
@@ -48,6 +48,47 @@ export async function GET(req: Request, { params }: { params: Params }) {
         error,
       },
       { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request, { params }: { params: Params }) {
+  try {
+    const { id } = params;
+    const body = req.json();
+
+    await updateUser(id, body);
+
+    return NextResponse.json(
+      {
+        ok: true,
+        message: `User with ID:${id} updated successfully`,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    if (error instanceof UserNotFoundError) {
+      return NextResponse.json(
+        {
+          ok: error.ok,
+          errorMessage: error.errorMessage,
+        },
+        {
+          status: error.code,
+        }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        ok: false,
+        error,
+      },
+      {
+        status: 500,
+      }
     );
   }
 }

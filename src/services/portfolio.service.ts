@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { PortfolioNotFoundError } from "@/utils/errors";
+import type { Portfolio } from "@prisma/client";
 
 export const getPortfolio = async (id: string) => {
   try {
@@ -33,7 +34,7 @@ export const getPortfolios = async () => {
   }
 };
 
-export const updatePortfolio = async (id: string, data: object) => {
+export const updatePortfolio = async (id: string, data: object | Portfolio) => {
   try {
     await getPortfolio(id);
 
