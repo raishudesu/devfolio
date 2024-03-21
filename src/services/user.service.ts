@@ -1,6 +1,71 @@
 import prisma from "@/lib/db";
-import { UserNotFoundError } from "@/utils/errors";
+import { userServerSchema } from "@/lib/zod";
+import {
+  ExistingUserByEmailError,
+  ExistingUserByUsername,
+  UserNotFoundError,
+} from "@/utils/errors";
 import type { User } from "@prisma/client";
+import { z } from "zod";
+
+export const existingUserByEmail = async (email: string) => {
+  try {
+    const existingEmail = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (existingEmail) {
+      throw new ExistingUserByEmailError(
+        false,
+        `A user already exists with email: ${email}`,
+        403
+      );
+    }
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const existingUserByUsername = async (username: string) => {
+  try {
+    const existingUsername = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
+
+    if (existingUsername) {
+      throw new ExistingUserByUsername(
+        false,
+        `A user already exists with username: ${username}`,
+        403
+      );
+    }
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createUser = async (data: z.infer<typeof userServerSchema>) => {
+  try {
+    await existingUserByEmail(data.email);
+    await existingUserByUsername(data.username);
+
+    const user = await prisma.user.create({
+      data,
+    });
+
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getUser = async (id: string) => {
   try {
