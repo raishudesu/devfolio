@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { UserNotFoundError } from "@/utils/errors";
+import type { User } from "@prisma/client";
 
 export const getUser = async (id: string) => {
   try {
@@ -20,6 +21,22 @@ export const getUser = async (id: string) => {
     const { password: userPassword, ...userDetails } = user!;
 
     return userDetails;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUser = async (id: string, data: object | User) => {
+  try {
+    await getUser(id);
+
+    await prisma.user.update({
+      where: {
+        id,
+      },
+      data,
+    });
+    return;
   } catch (error) {
     throw error;
   }
