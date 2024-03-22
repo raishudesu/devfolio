@@ -2,7 +2,7 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./db";
-import { compare } from "bcrypt";
+import { loginUser } from "@/services/user.service";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -24,22 +24,10 @@ export const authOptions: NextAuthOptions = {
         try {
           if (!credentials?.email || !credentials?.password) return null;
 
-          const existingUser = await prisma.user.findUnique({
-            where: { email: credentials?.email },
-          });
-
-          if (!existingUser)
-            throw new Error(
-              "Either email is incorrect or the account doesn't exist"
-            );
-
-          const passwordMatched = await compare(
-            credentials?.password,
-            existingUser?.password
+          const existingUser = await loginUser(
+            credentials.email,
+            credentials.password
           );
-
-          if (!passwordMatched) throw new Error("Incorrect password");
-          console.log(existingUser);
 
           return {
             ...existingUser,

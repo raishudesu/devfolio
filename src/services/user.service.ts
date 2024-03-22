@@ -6,6 +6,8 @@ import {
   UserNotFoundError,
 } from "@/utils/errors";
 import type { User } from "@prisma/client";
+import { compare } from "bcrypt";
+import { error } from "console";
 import { z } from "zod";
 
 export const getAllUser = async () => {
@@ -73,6 +75,28 @@ export const createUser = async (data: z.infer<typeof userServerSchema>) => {
 
     const { password: newUserPassword, ...userDetails } = user;
     return userDetails;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const loginUser = async (email: string, credentialPwd: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      throw new UserNotFoundError(false, "Account does not exist", 404);
+    }
+
+    const passwordMatched = await compare(credentialPwd, user.password);
+
+    if (!passwordMatched) throw new Error("Incorrect password");
+
+    return user;
   } catch (error) {
     throw error;
   }
