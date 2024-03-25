@@ -1,6 +1,6 @@
 import prisma from "@/lib/db";
 import { portfolioSchema } from "@/lib/zod";
-import { createPortfolio } from "@/services/portfolio.service";
+import { createPortfolio, getPortfolios } from "@/services/portfolio.service";
 import { getUser } from "@/services/user.service";
 import { UserHasPortfolioError } from "@/utils/errors";
 import { NextResponse } from "next/server";
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   try {
-    const portfolios = await prisma.portfolio.findMany();
+    const portfolios = await getPortfolios();
 
     return NextResponse.json(
       {

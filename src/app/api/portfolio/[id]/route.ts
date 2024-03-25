@@ -1,5 +1,7 @@
 import prisma from "@/lib/db";
 import { updatePortfolioSchema } from "@/lib/zod";
+import { getPortfolio, updatePortfolio } from "@/services/portfolio.service";
+import { PortfolioNotFoundError } from "@/utils/errors";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
@@ -7,23 +9,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
-    const portfolio = await prisma.portfolio.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!portfolio) {
-      return NextResponse.json(
-        {
-          ok: false,
-          message: `Portfolio with ID:${id} doesn't exist.`,
-        },
-        {
-          status: 404,
-        }
-      );
-    }
+    const portfolio = await getPortfolio(id);
 
     return NextResponse.json(
       {
@@ -35,6 +21,19 @@ export async function GET(req: Request, { params }: { params: Params }) {
       }
     );
   } catch (error) {
+    if (error instanceof PortfolioNotFoundError) {
+      return NextResponse.json(
+        {
+          ok: error.ok,
+          name: error.name,
+          errorMessage: error.errorMessage,
+        },
+        {
+          status: error.code,
+        }
+      );
+    }
+
     return NextResponse.json(
       {
         ok: false,
@@ -52,40 +51,32 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
 
     const { description, coverImageLink } = updatePortfolioSchema.parse(body);
 
-    //check if the portfolio exists
-    const portfolioExists = await prisma.portfolio.findUnique({
-      where: {
-        id,
-      },
-    });
+    await getPortfolio(id);
 
-    if (!portfolioExists) {
+    const portfolioData = {
+      description,
+      coverImageLink,
+    };
+    await updatePortfolio(id, portfolioData);
+
+    return NextResponse.json({
+      ok: true,
+      message: `Portfolio with ID:${id} updated successfully.`,
+    });
+  } catch (error) {
+    if (error instanceof PortfolioNotFoundError) {
       return NextResponse.json(
         {
-          ok: false,
-          message: `Portfolio with ID:${id} does not exist.`,
+          ok: error.ok,
+          name: error.name,
+          errorMessage: error.errorMessage,
         },
         {
-          status: 404,
+          status: error.code,
         }
       );
     }
 
-    const portfolio = await prisma.portfolio.update({
-      where: {
-        id,
-      },
-      data: {
-        description,
-        coverImageLink,
-      },
-    });
-
-    return NextResponse.json({
-      ok: true,
-      message: `Portfolio with ID:${portfolio.id} updated successfully.`,
-    });
-  } catch (error) {
     return NextResponse.json(
       {
         ok: false,
