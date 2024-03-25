@@ -1,5 +1,8 @@
 import prisma from "@/lib/db";
 import { portfolioSchema } from "@/lib/zod";
+import { createPortfolio } from "@/services/portfolio.service";
+import { getUser } from "@/services/user.service";
+import { UserHasPortfolioError } from "@/utils/errors";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -8,38 +11,31 @@ export async function POST(req: Request) {
 
     const { userId, description, coverImageLink } = portfolioSchema.parse(body);
 
-    // check if the user exists by userId
-    const checkUser = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    });
+    await getUser(userId);
 
-    if (!checkUser) {
+    const portfolioData = {
+      userId,
+      description,
+      coverImageLink,
+    };
+
+    const portfolio = await createPortfolio(portfolioData);
+
+    return NextResponse.json({ ok: true, portfolio }, { status: 201 });
+  } catch (error) {
+    if (error instanceof UserHasPortfolioError) {
       return NextResponse.json(
         {
-          ok: false,
-          message: "User does not exist!",
+          ok: error.ok,
+          errorMessage: error.errorMessage,
+          name: error.name,
         },
         {
-          status: 500,
+          status: error.code,
         }
       );
     }
 
-    const createPortfolio = await prisma.portfolio.create({
-      data: {
-        userId,
-        description,
-        coverImageLink,
-      },
-    });
-
-    return NextResponse.json(
-      { ok: true, portfolio: createPortfolio },
-      { status: 201 }
-    );
-  } catch (error) {
     return NextResponse.json({ ok: false, error }, { status: 500 });
   }
 }

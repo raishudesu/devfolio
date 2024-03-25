@@ -41,3 +41,14 @@ export class ExistingUserByUsername extends Error {
     this.name = "ExistingUserByUsernameError";
   }
 }
+
+export class UserHasPortfolioError extends Error {
+  constructor(
+    public ok: boolean,
+    public errorMessage: string,
+    public code: number
+  ) {
+    super(errorMessage);
+    this.name = "UserHasPortfolioError";
+  }
+}

@@ -1,6 +1,36 @@
 import prisma from "@/lib/db";
-import { PortfolioNotFoundError } from "@/utils/errors";
+import { portfolioSchema } from "@/lib/zod";
+import { PortfolioNotFoundError, UserHasPortfolioError } from "@/utils/errors";
 import type { Portfolio } from "@prisma/client";
+import { z } from "zod";
+
+export const createPortfolio = async (
+  data: z.infer<typeof portfolioSchema>
+) => {
+  try {
+    // check if user has already posted their portfolio
+    const userHasPortfolio = await prisma.portfolio.findUnique({
+      where: {
+        userId: data.userId,
+      },
+    });
+    if (userHasPortfolio) {
+      throw new UserHasPortfolioError(
+        false,
+        "Current user already posted a portfolio",
+        403
+      );
+    }
+
+    const portfolio = await prisma.portfolio.create({
+      data,
+    });
+
+    return portfolio;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getPortfolio = async (id: string) => {
   try {
