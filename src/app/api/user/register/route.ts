@@ -40,6 +40,7 @@ export async function POST(req: Request) {
         {
           ok: error.ok,
           errorMessage: error.errorMessage,
+          name: error.name,
         },
         {
           status: error.code,
