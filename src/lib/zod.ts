@@ -24,6 +24,34 @@ export const userServerSchema = z
   })
   .strict();
 
+export const registerFormSchema = z
+  .object({
+    username: z
+      .string({ required_error: "Username is required" })
+      .trim()
+      .min(2, "Username must be at least 2 characters")
+      .max(55),
+    email: z.string().trim().email(),
+    firstName: z
+      .string()
+      .trim()
+      .min(2, "First name must be at least 2 characters")
+      .max(55, "First name must not exceed 55 characters"),
+    lastName: z
+      .string()
+      .trim()
+      .min(2, "Last name must be at least 2 characters")
+      .max(55, "Last name must not exceed 55 characters"),
+    password: z
+      .string()
+      .trim()
+      .min(6, "Password must be at least 6 characters"),
+    confirmPassword: z.string().trim(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
 export const portfolioSchema = z
   .object({
     userId: z.string({ required_error: "User ID is required" }),

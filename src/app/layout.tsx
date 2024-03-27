@@ -3,6 +3,7 @@ import { Inter, Rubik } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 const rubik = Rubik({ subsets: ["latin"] });
@@ -30,6 +31,7 @@ export default function RootLayout({
           <main className="flex flex-col justify-center items-center">
             {children}
           </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

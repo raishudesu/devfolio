@@ -14,37 +14,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { RegisterResponse } from "@/types/types";
+import { registerFormSchema } from "@/lib/zod";
 
 const RegisterForm = () => {
-  //form schema
-  const registerFormSchema = z
-    .object({
-      username: z
-        .string({ required_error: "Username is required" })
-        .trim()
-        .min(2, "Username must be at least 2 characters")
-        .max(55),
-      email: z.string().trim().email(),
-      firstName: z
-        .string()
-        .trim()
-        .min(2, "First name must be at least 2 characters")
-        .max(55, "First name must not exceed 55 characters"),
-      lastName: z
-        .string()
-        .trim()
-        .min(2, "Last name must be at least 2 characters")
-        .max(55, "Last name must not exceed 55 characters"),
-      password: z
-        .string()
-        .trim()
-        .min(6, "Password must be at least 6 characters"),
-      confirmPassword: z.string().trim(),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-      path: ["confirmPassword"],
-      message: "Passwords do not match",
-    });
+  const router = useRouter();
 
   //form declaration
   const form = useForm<z.infer<typeof registerFormSchema>>({
@@ -77,13 +53,33 @@ const RegisterForm = () => {
         }),
       });
 
-      const data = await res.json();
+      const data = (await res.json()) as RegisterResponse;
 
       if (!data.ok) {
+        toast("Something went wrong.", {
+          description: data.errorMessage,
+          style: {
+            color: "red",
+          },
+        });
+
         console.error(data);
+        return;
       }
+
+      toast(`${data.message} 🚀`, {
+        description: `Welcome ${data.user.username}`,
+      });
+      router.push("/sign-in");
+
+      form.reset();
+
       console.log(data);
     } catch (error) {
+      toast("Something went wrong.", {
+        description: "Try again later",
+      });
+
       console.error(error);
     }
   };

@@ -3,5 +3,5 @@
   "vscord.status.problems.enabled": false,
   "vscord.enabled": true,
   "vscord.app.privacyMode.enable": false,
-  "cSpell.ignoreWords": ["hookform"]
+  "cSpell.ignoreWords": ["hookform", "sonner"]
 }

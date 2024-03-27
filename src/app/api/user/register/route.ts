@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     const newUser = await createUser(bodyData);
 
     return NextResponse.json(
-      { user: newUser, message: "User created successfully" },
+      { ok: true, user: newUser, message: "Registered successfully" },
       { status: 201 }
     );
   } catch (error) {
