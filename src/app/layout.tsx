@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Rubik } from "next/font/google";
 import "@/styles/globals.css";
 import Header from "@/components/header";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/providers/session-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const rubik = Rubik({ subsets: ["latin"] });
@@ -27,11 +28,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="flex flex-col justify-center items-center">
-            {children}
-          </main>
-          <Toaster />
+          <AuthProvider>
+            <Header />
+            <main className="flex flex-col justify-center items-center">
+              {children}
+            </main>
+            <Toaster />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

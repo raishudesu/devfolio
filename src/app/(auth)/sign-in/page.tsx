@@ -1,10 +1,10 @@
 import React from "react";
+import SignInForm from "../components/sign-in-form";
 
 const SignInPage = () => {
   return (
     <div>
-      This is the sign in page with sign in form.
-      <a href="/register">Go to register</a>
+      <SignInForm />
     </div>
   );
 };

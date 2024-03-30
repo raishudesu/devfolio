@@ -24,13 +24,18 @@ export const userServerSchema = z
   })
   .strict();
 
+export const signInFormSchema = z.object({
+  email: z.string().trim().email(),
+  password: z.string().trim().min(6, "Password must be at least 6 characters"),
+});
+
 export const registerFormSchema = z
   .object({
     username: z
       .string({ required_error: "Username is required" })
       .trim()
       .min(2, "Username must be at least 2 characters")
-      .max(55),
+      .max(55, "Username must not exceed 55 characters"),
     email: z.string().trim().email(),
     firstName: z
       .string()
