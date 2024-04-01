@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/session-provider";
+import TanstackProvider from "@/providers/tanstack-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 const rubik = Rubik({ subsets: ["latin"] });
@@ -22,20 +23,22 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AuthProvider>
-            <Header />
-            <main className="flex flex-col justify-center items-center">
-              {children}
-            </main>
-            <Toaster />
-          </AuthProvider>
-        </ThemeProvider>
+        <TanstackProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>
+              <Header />
+              <main className="flex flex-col justify-center items-center">
+                {children}
+              </main>
+              <Toaster />
+            </AuthProvider>
+          </ThemeProvider>
+        </TanstackProvider>
       </body>
     </html>
   );

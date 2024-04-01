@@ -1,4 +1,3 @@
-import prisma from "@/lib/db";
 import { portfolioSchema } from "@/lib/zod";
 import { createPortfolio, getPortfolios } from "@/services/portfolio.service";
 import { getUser } from "@/services/user.service";
