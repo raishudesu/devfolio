@@ -11,3 +11,8 @@ export type PortfolioResponse = Response & {
   ok: boolean;
   portfolios: Portfolio[];
 };
+
+export type UserResponse = Response & {
+  ok: boolean;
+  user: User;
+};

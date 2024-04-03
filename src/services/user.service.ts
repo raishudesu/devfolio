@@ -126,6 +126,29 @@ export const getUser = async (id: string) => {
   }
 };
 
+export const getUserByUsername = async (username: string) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
+
+    if (!user)
+      throw new UserNotFoundError(
+        false,
+        `User with username:${username} does not exist`,
+        404
+      );
+
+    const { password: userPassword, ...userDetails } = user!;
+
+    return userDetails;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateUser = async (id: string, data: object | User) => {
   try {
     await getUser(id);
