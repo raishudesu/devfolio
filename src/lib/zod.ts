@@ -57,19 +57,17 @@ export const registerFormSchema = z
     path: ["confirmPassword"],
     message: "Passwords do not match",
   });
-export const portfolioSchema = z
+export const projectSchema = z
   .object({
     userId: z.string({ required_error: "User ID is required" }),
+    projectName: z.string({ required_error: "Project name is required" }),
     description: z.string({ required_error: "Description is required" }),
-    coverImageLink: z.string({
-      required_error: "Cover image link is required",
-    }),
   })
   .strict();
 
-export const updatePortfolioSchema = z
+export const updateProjectSchema = z
   .object({
+    projectName: z.string().optional(),
     description: z.string().optional(),
-    coverImageLink: z.string().optional(),
   })
   .strict();

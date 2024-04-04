@@ -9,14 +9,14 @@ export class UserNotFoundError extends Error {
   }
 }
 
-export class PortfolioNotFoundError extends Error {
+export class ProjectNotFoundError extends Error {
   constructor(
     public ok: boolean,
     public errorMessage: string,
     public code: number
   ) {
     super(errorMessage);
-    this.name = "PortfolioNotFoundError";
+    this.name = "ProjectNotFoundError";
   }
 }
 
@@ -42,13 +42,13 @@ export class ExistingUserByUsername extends Error {
   }
 }
 
-export class UserHasPortfolioError extends Error {
+export class UserHasProjectError extends Error {
   constructor(
     public ok: boolean,
     public errorMessage: string,
     public code: number
   ) {
     super(errorMessage);
-    this.name = "UserHasPortfolioError";
+    this.name = "UserHasProjectError";
   }
 }

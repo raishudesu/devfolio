@@ -1,7 +1,7 @@
 import prisma from "@/lib/db";
-import { updatePortfolioSchema } from "@/lib/zod";
-import { getPortfolio, updatePortfolio } from "@/services/portfolio.service";
-import { PortfolioNotFoundError } from "@/utils/errors";
+import { updateProjectSchema } from "@/lib/zod";
+import { getProject, updateProject } from "@/services/project.service";
+import { ProjectNotFoundError } from "@/utils/errors";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
@@ -9,19 +9,19 @@ export async function GET(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
-    const portfolio = await getPortfolio(id);
+    const Project = await getProject(id);
 
     return NextResponse.json(
       {
         ok: true,
-        portfolio,
+        Project,
       },
       {
         status: 200,
       }
     );
   } catch (error) {
-    if (error instanceof PortfolioNotFoundError) {
+    if (error instanceof ProjectNotFoundError) {
       return NextResponse.json(
         {
           ok: error.ok,
@@ -49,22 +49,22 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
     const { id } = params;
     const body = await req.json();
 
-    const { description, coverImageLink } = updatePortfolioSchema.parse(body);
+    const { description, projectName } = updateProjectSchema.parse(body);
 
-    await getPortfolio(id);
+    await getProject(id);
 
-    const portfolioData = {
+    const projectData = {
       description,
-      coverImageLink,
+      projectName,
     };
-    await updatePortfolio(id, portfolioData);
+    await updateProject(id, projectData);
 
     return NextResponse.json({
       ok: true,
-      message: `Portfolio with ID:${id} updated successfully.`,
+      message: `Project with ID:${id} updated successfully.`,
     });
   } catch (error) {
-    if (error instanceof PortfolioNotFoundError) {
+    if (error instanceof ProjectNotFoundError) {
       return NextResponse.json(
         {
           ok: error.ok,
@@ -93,22 +93,22 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
-    const portfolioExists = await prisma.portfolio.findUnique({
+    const projectExists = await prisma.project.findUnique({
       where: {
         id,
       },
     });
-    if (!portfolioExists) {
+    if (!projectExists) {
       return NextResponse.json(
         {
           ok: false,
-          message: `Portfolio with ID:${id} does not exist.`,
+          message: `Project with ID:${id} does not exist.`,
         },
         { status: 404 }
       );
     }
 
-    await prisma.portfolio.delete({
+    await prisma.project.delete({
       where: {
         id,
       },
@@ -117,7 +117,7 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
     return NextResponse.json(
       {
         ok: true,
-        message: `Portfolio with ID:${id} deleted successfully`,
+        message: `Project with ID:${id} deleted successfully`,
       },
       {
         status: 200,
