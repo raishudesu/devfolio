@@ -20,7 +20,7 @@ model Project {
 
 model Image {
   id        String   @id @default(uuid())
-  projectId String   @unique
+  projectId String
   url       String
   createdAt DateTime @default(now())
   project   Project  @relation(fields: [projectId], references: [id])

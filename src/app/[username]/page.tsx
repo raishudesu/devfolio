@@ -18,7 +18,6 @@ const UserPage = ({ params }: { params: { username: string } }) => {
   }
   return (
     <section>
-      User page
       {isFetching ? "Loading..." : null}
       {isSuccess ? (
         <Image
@@ -34,6 +33,9 @@ const UserPage = ({ params }: { params: { username: string } }) => {
         <h2>
           {data?.user.firstName} {data?.user.lastName}
         </h2>
+      </div>
+      <div>
+        
       </div>
     </section>
   );

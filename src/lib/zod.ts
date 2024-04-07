@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { object, z } from "zod";
 
 export const userServerSchema = z
   .object({
@@ -71,3 +71,12 @@ export const updateProjectSchema = z
     description: z.string().optional(),
   })
   .strict();
+
+export const imageSchema = z.array(
+  z
+    .object({
+      projectId: z.string({ required_error: "Project ID is required" }).trim(),
+      url: z.string({ required_error: "Image URL is required" }).trim(),
+    })
+    .strict()
+);
