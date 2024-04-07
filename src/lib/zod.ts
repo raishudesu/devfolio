@@ -72,7 +72,7 @@ export const updateProjectSchema = z
   })
   .strict();
 
-export const imageSchema = z.array(
+export const uploadImagesSchema = z.array(
   z
     .object({
       projectId: z.string({ required_error: "Project ID is required" }).trim(),
@@ -80,3 +80,10 @@ export const imageSchema = z.array(
     })
     .strict()
 );
+
+export const imageObjectSchema = z
+  .object({
+    projectId: z.string({ required_error: "Project ID is required" }).trim(),
+    url: z.string({ required_error: "Image URL is required" }).trim(),
+  })
+  .strict();

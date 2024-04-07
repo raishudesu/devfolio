@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { imageSchema } from "@/lib/zod";
+import { imageObjectSchema, uploadImagesSchema } from "@/lib/zod";
 import { z } from "zod";
 
 export const getImagesByProject = async (projectId: string) => {
@@ -17,7 +17,7 @@ export const getImagesByProject = async (projectId: string) => {
 };
 
 export const addProjectImages = async (
-  imageArray: z.infer<typeof imageSchema>
+  imageArray: z.infer<typeof uploadImagesSchema>
 ) => {
   try {
     const images = prisma.image.createMany({
@@ -25,6 +25,37 @@ export const addProjectImages = async (
     });
 
     return images;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateImage = async (
+  id: string,
+  data: z.infer<typeof imageObjectSchema>
+) => {
+  try {
+    const image = prisma.image.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return image;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteImage = async (id: string) => {
+  try {
+    await prisma.image.delete({
+      where: {
+        id,
+      },
+    });
+    return;
   } catch (error) {
     throw error;
   }

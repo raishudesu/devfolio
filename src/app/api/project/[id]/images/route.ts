@@ -1,5 +1,10 @@
-import { imageSchema } from "@/lib/zod";
-import { addProjectImages, getImagesByProject } from "@/services/image.service";
+import { uploadImagesSchema, imageObjectSchema } from "@/lib/zod";
+import {
+  addProjectImages,
+  deleteImage,
+  getImagesByProject,
+  updateImage,
+} from "@/services/image.service";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
@@ -32,7 +37,7 @@ export async function POST(req: Request, { params }: { params: Params }) {
 
     const body = await req.json();
 
-    const imageArray = imageSchema.parse(body);
+    const imageArray = uploadImagesSchema.parse(body);
 
     console.log(imageArray);
 
@@ -54,6 +59,63 @@ export async function POST(req: Request, { params }: { params: Params }) {
       {
         status: 500,
       }
+    );
+  }
+}
+
+export async function PATCH(req: Request, { params }: { params: Params }) {
+  try {
+    const { id } = params;
+
+    const body = await req.json();
+
+    const { url, projectId } = imageObjectSchema.parse(body);
+
+    const data = {
+      url,
+      projectId,
+    };
+
+    const image = await updateImage(id, data);
+
+    return NextResponse.json(
+      {
+        ok: true,
+        image,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: Request, { params }: { params: Params }) {
+  try {
+    const { id } = params;
+
+    await deleteImage(id);
+
+    return NextResponse.json(
+      {
+        ok: true,
+        message: "Image deleted successfully",
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error,
+      },
+      { status: 500 }
     );
   }
 }
