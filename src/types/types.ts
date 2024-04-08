@@ -1,7 +1,14 @@
 import type { User, Project, Image } from "@prisma/client";
 
+type IncludeUser = {
+  username: string;
+  firstName: string;
+  lastName: string;
+};
+
 type ProjectType = Project & {
   images: Image[];
+  user: IncludeUser;
 };
 
 export type RegisterResponse = {

@@ -16,8 +16,9 @@ const Projects = () => {
     <div>
       {isFetching ? "Loading..." : null}
       {data?.projects?.map(
-        ({ id, userId, projectName, description, images }) => (
+        ({ id, userId, user, projectName, description, images }) => (
           <div key={id}>
+            <div>{user.username}</div>
             <div>
               {projectName}
               <p>{description}</p>

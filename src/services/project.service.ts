@@ -24,6 +24,13 @@ export const getProject = async (id: string) => {
       },
       include: {
         images: true,
+        user: {
+          select: {
+            username: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
     });
 
@@ -46,6 +53,13 @@ export const getProjects = async () => {
     const projects = await prisma.project.findMany({
       include: {
         images: true,
+        user: {
+          select: {
+            username: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
     });
 
