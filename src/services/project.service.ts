@@ -22,6 +22,9 @@ export const getProject = async (id: string) => {
       where: {
         id,
       },
+      include: {
+        images: true,
+      },
     });
 
     if (!project) {
@@ -40,7 +43,11 @@ export const getProject = async (id: string) => {
 
 export const getProjects = async () => {
   try {
-    const projects = await prisma.project.findMany();
+    const projects = await prisma.project.findMany({
+      include: {
+        images: true,
+      },
+    });
 
     return projects;
   } catch (error) {

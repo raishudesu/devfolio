@@ -9,12 +9,12 @@ export async function GET(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
-    const Project = await getProject(id);
+    const project = await getProject(id);
 
     return NextResponse.json(
       {
         ok: true,
-        Project,
+        project,
       },
       {
         status: 200,

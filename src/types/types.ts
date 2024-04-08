@@ -1,4 +1,8 @@
-import type { User, Portfolio } from "@prisma/client";
+import type { User, Project, Image } from "@prisma/client";
+
+type ProjectType = Project & {
+  images: Image[];
+};
 
 export type RegisterResponse = {
   ok: boolean;
@@ -7,9 +11,14 @@ export type RegisterResponse = {
   errorMessage: string;
 };
 
-export type PortfolioResponse = Response & {
+export type ProjectsResponse = Response & {
   ok: boolean;
-  portfolios: Portfolio[];
+  projects: ProjectType[];
+};
+
+export type ProjectResponse = Response & {
+  ok: boolean;
+  project: ProjectType;
 };
 
 export type UserResponse = Response & {
