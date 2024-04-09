@@ -6,7 +6,14 @@ type IncludeUser = {
   lastName: string;
 };
 
-type ProjectType = Project & {
+export type ProjectCard = {
+  projectName: string;
+  description: string;
+  user: IncludeUser;
+  url: string;
+};
+
+export type ProjectType = Project & {
   images: Image[];
   user: IncludeUser;
 };

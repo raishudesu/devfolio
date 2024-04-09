@@ -48,11 +48,12 @@ export const updateImage = async (
   }
 };
 
-export const deleteImage = async (id: string) => {
+export const deleteImage = async (id: string, projectId: string) => {
   try {
     await prisma.image.delete({
       where: {
         id,
+        projectId,
       },
     });
     return;

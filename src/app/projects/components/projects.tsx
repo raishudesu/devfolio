@@ -4,6 +4,7 @@ import { getProjectsUtil } from "@/utils/project-utils";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import ProjectCard from "./project-card";
 
 const Projects = () => {
   const { isFetching, isSuccess, data, error } = useQuery({
@@ -17,24 +18,13 @@ const Projects = () => {
       {isFetching ? "Loading..." : null}
       {data?.projects?.map(
         ({ id, userId, user, projectName, description, images }) => (
-          <div key={id}>
-            <div>{user.username}</div>
-            <div>
-              {projectName}
-              <p>{description}</p>
-            </div>
-            <div>
-              {images.map(({ url, projectId, id }, index) => (
-                <Image
-                  width={150}
-                  height={150}
-                  src={url}
-                  alt={url}
-                  key={index}
-                />
-              ))}
-            </div>
-          </div>
+          <ProjectCard
+            projectName={projectName}
+            description={description}
+            url={images[0].url}
+            user={user}
+            key={id}
+          />
         )
       )}
     </div>

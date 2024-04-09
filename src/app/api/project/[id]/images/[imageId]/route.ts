@@ -98,9 +98,9 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
 
 export async function DELETE(req: Request, { params }: { params: Params }) {
   try {
-    const { id } = params;
+    const { id: projectId, imageId } = params;
 
-    await deleteImage(id);
+    await deleteImage(imageId, projectId);
 
     return NextResponse.json(
       {
