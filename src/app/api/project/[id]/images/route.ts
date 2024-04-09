@@ -4,6 +4,7 @@ import {
   getImagesByProject,
   updateImage,
 } from "@/services/image.service";
+import { getProject } from "@/services/project.service";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
@@ -38,7 +39,8 @@ export async function POST(req: Request, { params }: { params: Params }) {
 
     const imageArray = uploadImagesSchema.parse(body);
 
-    console.log(imageArray);
+    await getProject(id);
+    // console.log(imageArray);
 
     const images = await addProjectImages(imageArray);
 
