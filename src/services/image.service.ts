@@ -1,6 +1,7 @@
 import prisma from "@/lib/db";
 import { imageObjectSchema, uploadImagesSchema } from "@/lib/zod";
 import { z } from "zod";
+import { getProject } from "./project.service";
 
 export const getImagesByProject = async (projectId: string) => {
   try {
@@ -20,6 +21,8 @@ export const addProjectImages = async (
   imageArray: z.infer<typeof uploadImagesSchema>
 ) => {
   try {
+    await getProject(imageArray[0].projectId);
+
     const images = prisma.image.createMany({
       data: imageArray,
     });
