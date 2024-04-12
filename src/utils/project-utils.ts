@@ -22,3 +22,19 @@ export const getProjectUtil = async (id: string): Promise<ProjectResponse> => {
     throw error;
   }
 };
+
+export const getProjectsByUserUtil = async (
+  userId: string
+): Promise<ProjectsResponse> => {
+  try {
+    const res = (await fetch(
+      `/api/user/${userId}/projects`
+    )) as ProjectsResponse;
+
+    const data = (await res.json()) as ProjectsResponse;
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};

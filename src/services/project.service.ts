@@ -48,6 +48,23 @@ export const getProject = async (id: string) => {
   }
 };
 
+export const getProjectsByUser = async (userId: string) => {
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        userId,
+      },
+      include: {
+        images: true,
+      },
+    });
+
+    return projects;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getProjects = async () => {
   try {
     const projects = await prisma.project.findMany({
