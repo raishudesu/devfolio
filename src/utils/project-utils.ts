@@ -14,7 +14,7 @@ export const getProjectsUtil = async (): Promise<ProjectsResponse> => {
 
 export const getProjectUtil = async (id: string): Promise<ProjectResponse> => {
   try {
-    const res = (await fetch(`/api/project${id}`)) as ProjectResponse;
+    const res = (await fetch(`/api/project/${id}`)) as ProjectResponse;
     const data = (await res.json()) as ProjectResponse;
 
     return data;
