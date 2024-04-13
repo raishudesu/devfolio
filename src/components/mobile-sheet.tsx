@@ -11,12 +11,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
 
 const MobileSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline">Open</Button>
+        <Button variant="outline">
+          <Menu />
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
