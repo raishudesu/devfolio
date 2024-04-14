@@ -5,10 +5,11 @@ import Image from "next/image";
 const UserProjects = ({ userId }: { userId: string }) => {
   const { isFetching, isSuccess, data, error } = useQuery({
     queryKey: ["userProjects"],
-    queryFn: async () => getProjectsByUserUtil(userId),
+    queryFn: async () => await getProjectsByUserUtil(userId),
     refetchOnWindowFocus: false,
   });
 
+  console.log(data);
   const projects = data?.projects;
 
   return (
@@ -17,18 +18,25 @@ const UserProjects = ({ userId }: { userId: string }) => {
         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           Projects
         </h2>
-        <div className="flex flex-col gap-4">
+        {isFetching ? "Loading projects..." : null}
+        <div className="columns-1 sm:columns-2 lg:columns-4 gap-4">
           {isSuccess ? (
             <>
               {projects?.map(({ id, projectName, images }) => (
-                <div key={id} className="rounded-sm border overflow-hidden">
+                <div
+                  key={id}
+                  className="rounded-sm overflow-hidden flex flex-col gap-4 pb-2"
+                >
                   <Image
                     src={images[0].url}
                     alt={images[0].url}
                     width={500}
                     height={500}
+                    className="rounded-sm w-full"
                   />
-                  {/* <h1>{projectName}</h1> */}
+                  <small className="text-sm font-medium leading-none text-muted-foreground">
+                    {projectName}
+                  </small>
                 </div>
               ))}
             </>
