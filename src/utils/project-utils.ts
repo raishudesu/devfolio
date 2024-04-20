@@ -27,11 +27,11 @@ export const getProjectsByUserUtil = async (
   userId: string
 ): Promise<ProjectsResponse> => {
   try {
-    const res = (await fetch(
-      `/api/user/${userId}/projects`
-    )) as ProjectsResponse;
+    const res = await fetch(`/api/user/${userId}/projects`);
 
-    const data = (await res.json()) as ProjectsResponse;
+    const data = await res.json();
+
+    console.log(data);
 
     return data;
   } catch (error) {

@@ -7,18 +7,7 @@ import {
 } from "@/utils/errors";
 import type { User } from "@prisma/client";
 import { compare } from "bcrypt";
-import { error } from "console";
 import { z } from "zod";
-
-export const getAllUser = async () => {
-  try {
-    const users = await prisma.user.findMany();
-
-    return users;
-  } catch (error) {
-    throw error;
-  }
-};
 
 export const existingUserByEmail = async (email: string) => {
   try {
@@ -102,30 +91,6 @@ export const loginUser = async (email: string, credentialPwd: string) => {
   }
 };
 
-export const getUser = async (id: string) => {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!user)
-      throw new UserNotFoundError(
-        false,
-        `User with ID:${id} does not exist`,
-        404
-      );
-
-    // exclude password in returned data
-    const { password: userPassword, ...userDetails } = user!;
-
-    return userDetails;
-  } catch (error) {
-    throw error;
-  }
-};
-
 export const getUserByUsername = async (username: string) => {
   try {
     const user = await prisma.user.findUnique({
@@ -149,13 +114,13 @@ export const getUserByUsername = async (username: string) => {
   }
 };
 
-export const updateUser = async (id: string, data: object | User) => {
+export const updateUser = async (username: string, data: object | User) => {
   try {
-    await getUser(id);
+    await getUserByUsername(username);
 
     await prisma.user.update({
       where: {
-        id,
+        username,
       },
       data,
     });
@@ -165,14 +130,14 @@ export const updateUser = async (id: string, data: object | User) => {
   }
 };
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (username: string) => {
   try {
-    await getUser(id);
+    await getUserByUsername(username);
 
     // can be updated to check if user is already deleted (active: false)
     await prisma.user.update({
       where: {
-        id,
+        username,
       },
       data: {
         active: false,

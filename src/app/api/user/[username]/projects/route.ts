@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request, { params }: { params: Params }) {
   try {
-    const { id } = params;
+    const { username } = params;
 
-    const projects = await getProjectsByUser(id);
+    const projects = await getProjectsByUser(username);
 
     return NextResponse.json(
       {
@@ -18,7 +18,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
   } catch (error) {
     return NextResponse.json(
       {
-        ok: true,
+        ok: false,
         error,
       },
       { status: 500 }
