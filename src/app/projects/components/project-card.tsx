@@ -1,28 +1,17 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import type { ProjectCard } from "@/types/types";
 import Image from "next/image";
 
-const ProjectCard = ({ projectName, description, url, user }: ProjectCard) => {
+const ProjectCard = ({ url }: ProjectCard) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{projectName}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Image src={url} alt={url} width={150} height={150} />
-      </CardContent>
-      <CardFooter>
-        {user.firstName} {user.lastName}
-      </CardFooter>
-    </Card>
+    <div className="flex flex-col mb-6 gap-2">
+      <Image
+        className="w-full rounded-xl"
+        src={url}
+        alt={url}
+        width={150}
+        height={150}
+      />
+    </div>
   );
 };
 

@@ -1,13 +1,11 @@
 import ProjectDetails from "./components/project-details";
 
-const ProjectPage = () => {
+const ProjectPage = ({ params }: { params: { id: string } }) => {
   return (
-    <div>
-      <ProjectDetails />
+    <div className="w-full flex justify-center">
+      <ProjectDetails projectId={params.id} />
     </div>
   );
 };
-
-//include more projects by the user
 
 export default ProjectPage;

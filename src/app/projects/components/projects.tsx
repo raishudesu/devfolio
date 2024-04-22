@@ -15,7 +15,7 @@ const Projects = () => {
 
   return (
     <div>
-      {isFetching ? "Loading..." : null}
+      {/* {isFetching ? "Loading..." : null}
       {data?.projects?.map(
         ({ id, userId, user, projectName, description, images }) => (
           <ProjectCard
@@ -26,7 +26,7 @@ const Projects = () => {
             key={id}
           />
         )
-      )}
+      )} */}
     </div>
   );
 };

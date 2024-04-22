@@ -1,33 +1,37 @@
-import { getProjectsByUserUtil } from "@/utils/project-utils";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
+import { ProjectsResponse } from "@/types/types";
+import ProjectCard from "../../components/project-card";
 
-const MoreProjects = ({ id, userId }: { id: string; userId: string }) => {
-  const { isFetching, isSuccess, data, error } = useQuery({
-    queryKey: ["more-projects"],
-    queryFn: async () => getProjectsByUserUtil(userId),
-    refetchOnWindowFocus: false,
-  });
+const getMoreProjects = async (username: string): Promise<ProjectsResponse> => {
+  const data = await fetch(
+    `http://localhost:3000/api/user/${username}/projects`
+  );
 
-  const moreProjects = data?.projects.filter((project) => project.id !== id);
+  return await data.json();
+};
 
-  // console.log(data);
+const MoreProjects = async ({
+  projectId,
+  username,
+}: {
+  projectId: string;
+  username: string;
+}) => {
+  const data = await getMoreProjects(username);
+
+  const moreProjects = data?.projects.filter(
+    (project) => project.id !== projectId
+  );
 
   return (
-    <div>
-      {isSuccess ? (
-        <>
-          {moreProjects?.map(({ images }, index) => (
-            <Image
-              src={images[0].url}
-              alt={images[0].url}
-              width={150}
-              height={150}
-              key={index}
-            />
-          ))}
-        </>
-      ) : null}
+    <div className="w-full columns-1 md:columns-2 gap-4">
+      {moreProjects?.map(({ id, projectName, images, user }) => (
+        <ProjectCard
+          projectName={projectName}
+          user={user}
+          url={images[0].url}
+          key={id}
+        />
+      ))}
     </div>
   );
 };

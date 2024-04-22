@@ -1,6 +1,6 @@
 import { projectSchema } from "@/lib/zod";
 import { createProject, getProjects } from "@/services/project.service";
-import { getUser } from "@/services/user.service";
+// import { getUser } from "@/services/user.service";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -9,7 +9,7 @@ export async function POST(req: Request) {
 
     const { userId, description, projectName } = projectSchema.parse(body);
 
-    await getUser(userId);
+    // await getUser(userId);
 
     const projectData = {
       userId,
