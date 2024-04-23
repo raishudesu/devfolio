@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import Profile from "./components/profile";
 import UserProjects from "./components/user-projects";
 
@@ -7,6 +8,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
   return (
     <div className="w-full flex flex-col justify-center items-center">
       <Profile username={username} />
+      <Separator className="max-w-screen-2xl" />
       <UserProjects username={username} />
     </div>
   );

@@ -18,11 +18,9 @@ const getUserProfile = async (username: string): Promise<UserResponse> => {
 const Profile = async ({ username }: { username: string }) => {
   const data = await getUserProfile(username);
 
-  console.log(data);
-
   return (
     <section className="mt-4 w-full flex flex-col lg:items-center gap-4 max-w-screen-xl">
-      <div className="w-full border-b p-4">
+      <div className="w-full p-4">
         <div className="flex flex-col lg:flex-row gap-4 justify-center">
           <div className="w-20 h-20 bg-slate-500 rounded-full flex justify-center items-center">
             PFP
