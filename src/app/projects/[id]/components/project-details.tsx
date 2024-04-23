@@ -22,7 +22,7 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
         <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           {project.projectName}
         </h1>
-        <div className="sticky top-0 flex gap-2 py-3 bg-primary-foreground">
+        <div className="z-10 sticky top-0 flex gap-2 py-3 bg-primary-foreground">
           <div className="w-12 h-12 rounded-full bg-slate-400"></div>
 
           <div className="w-full flex justify-between items-center">
@@ -46,7 +46,7 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
             </div>
           </div>
         </div>
-        <div className="py-6 ">
+        <div className="py-6 grid gap-6">
           {project.images.map(({ id, url }) => (
             <AspectRatio ratio={16 / 9} key={id}>
               <Image
