@@ -58,10 +58,17 @@ export const getProjectsByUser = async (username: string) => {
       },
       include: {
         images: true,
+        user: {
+          select: {
+            username: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
     });
 
-    return projects; // IT RETURNS AN EMPTY ARRAY AT FIRST
+    return projects;
   } catch (error) {
     throw error;
   }

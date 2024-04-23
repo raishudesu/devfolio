@@ -4,6 +4,7 @@ import MoreProjects from "./more-projects";
 import { Button } from "@/components/ui/button";
 import { Bookmark, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const getProject = async (projectId: string): Promise<ProjectResponse> => {
   const data = await fetch(`http://localhost:3000/api/project/${projectId}`);
@@ -16,11 +17,11 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
   const { project } = data;
 
   return (
-    <section className="my-6 w-full max-w-screen-lg">
+    <section className="my-6 w-full max-w-screen-xl">
       <div className="w-full">
-        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+        <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           {project.projectName}
-        </h2>
+        </h1>
         <div className="sticky top-0 flex gap-2 py-3 bg-primary-foreground">
           <div className="w-12 h-12 rounded-full bg-slate-400"></div>
 
@@ -47,14 +48,14 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
         </div>
         <div className="py-6 ">
           {project.images.map(({ id, url }) => (
-            <Image
-              className="w-full rounded-xl"
-              src={url}
-              alt={url}
-              key={id}
-              width={400}
-              height={255}
-            />
+            <AspectRatio ratio={16 / 9} key={id}>
+              <Image
+                src={url}
+                alt={url}
+                fill
+                className="rounded-md object-cover"
+              />
+            </AspectRatio>
           ))}
 
           <p className="leading-7 [&:not(:first-child)]:mt-6 text-xl">

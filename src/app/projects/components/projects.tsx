@@ -1,33 +1,33 @@
-"use client";
-
-import { getProjectsUtil } from "@/utils/project-utils";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import ProjectCard from "./project-card";
+import { ProjectsResponse } from "@/types/types";
 
-const Projects = () => {
-  const { isFetching, isSuccess, data, error } = useQuery({
-    queryKey: ["projects"],
-    queryFn: getProjectsUtil,
-    refetchOnWindowFocus: false,
-  });
+const getProjects = async (): Promise<ProjectsResponse> => {
+  const data = await fetch("http://localhost:3000/api/project");
+  return await data.json();
+};
+
+const Projects = async () => {
+  const data = await getProjects();
 
   return (
-    <div>
-      {/* {isFetching ? "Loading..." : null}
-      {data?.projects?.map(
-        ({ id, userId, user, projectName, description, images }) => (
-          <ProjectCard
-            projectName={projectName}
-            description={description}
-            url={images[0].url}
-            user={user}
-            key={id}
-          />
-        )
-      )} */}
-    </div>
+    <section className="my-6">
+      <h1 className="scroll-m-20 pb-6 text-3xl font-semibold tracking-tight first:mt-0">
+        Projects
+      </h1>
+      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {data?.projects?.map(
+          ({ id, userId, user, projectName, description, images }) => (
+            <ProjectCard
+              projectId={id}
+              projectName={projectName}
+              url={images[0].url}
+              user={user}
+              key={id}
+            />
+          )
+        )}
+      </div>
+    </section>
   );
 };
 

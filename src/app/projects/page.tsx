@@ -3,8 +3,7 @@ import Projects from "./components/projects";
 
 const ProjectsPage = () => {
   return (
-    <div>
-      Here lies the portfolios
+    <div className="w-full max-w-screen-2xl px-2">
       <Projects />
     </div>
   );

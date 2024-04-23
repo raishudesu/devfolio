@@ -23,9 +23,10 @@ const MoreProjects = async ({
   );
 
   return (
-    <div className="w-full columns-1 md:columns-2 gap-4">
+    <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       {moreProjects?.map(({ id, projectName, images, user }) => (
         <ProjectCard
+          projectId={id}
           projectName={projectName}
           user={user}
           url={images[0].url}

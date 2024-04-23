@@ -7,6 +7,7 @@ type IncludeUser = {
 };
 
 export type ProjectCard = {
+  projectId: string;
   projectName: string;
   user: IncludeUser;
   url: string;
