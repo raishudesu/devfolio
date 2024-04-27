@@ -68,13 +68,11 @@ const RegisterForm = () => {
       }
 
       toast(`${data.message} 🚀`, {
-        description: `Welcome ${data.user.username}`,
+        description: `You may now sign in.`,
       });
       router.push("/sign-in");
 
       form.reset();
-
-      console.log(data);
     } catch (error) {
       toast("Something went wrong.", {
         description: "Try again later",

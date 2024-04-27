@@ -26,29 +26,27 @@ const Profile = async ({ username }: { username: string }) => {
             PFP
           </div>
           <div className="flex flex-col gap-4 pb-4  max-w-screen-sm ">
-            <>
-              <h1 className="mt-4 lg:mt-0 scroll-m-20 text-2xl font-bold tracking-tight">
-                {data?.user.firstName} {data?.user.lastName}
-              </h1>
-              <p className="leading-7 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Molestiae esse aspernatur tenetur ullam temporibus distinctio!
-              </p>
-              <div>
-                <small className="text-sm font-medium leading-none text-muted-foreground">
-                  1,000 followers 1,000 following 1,000 likes
-                </small>
-              </div>
-              <div className="flex gap-4">
-                <Button size={"lg"}>Get in touch</Button>
-                <Button size={"lg"} variant={"secondary"}>
-                  Follow
-                </Button>
-                <Button size={"lg"} variant={"secondary"}>
-                  ...
-                </Button>
-              </div>
-            </>
+            <h1 className="mt-4 lg:mt-0 scroll-m-20 text-2xl font-bold tracking-tight">
+              {data?.user.firstName} {data?.user.lastName}
+            </h1>
+            <p className="leading-7 text-sm">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Molestiae esse aspernatur tenetur ullam temporibus distinctio!
+            </p>
+            <div>
+              <small className="text-sm font-medium leading-none text-muted-foreground">
+                1,000 followers 1,000 following 1,000 likes
+              </small>
+            </div>
+            <div className="flex gap-4">
+              <Button size={"lg"}>Get in touch</Button>
+              <Button size={"lg"} variant={"secondary"}>
+                Follow
+              </Button>
+              <Button size={"lg"} variant={"secondary"}>
+                ...
+              </Button>
+            </div>
           </div>
         </div>
       </div>

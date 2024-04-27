@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Bookmark, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import Link from "next/link";
 
 const getProject = async (projectId: string): Promise<ProjectResponse> => {
   const data = await fetch(`http://localhost:3000/api/project/${projectId}`);
@@ -27,9 +28,14 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
 
           <div className="w-full flex justify-between items-center">
             <div className="flex flex-col gap-2">
-              <p>
-                {project.user.firstName} {project.user.lastName}
-              </p>
+              <Link
+                href={`/${project.user.username}`}
+                className="hover:underline"
+              >
+                <p>
+                  {project.user.firstName} {project.user.lastName}
+                </p>
+              </Link>
               <div className="flex gap-2 items-center">
                 <div className="w-2 h-2 bg-green-400 animate-pulse rounded-full"></div>
                 <small>Available for work 🚀 </small>

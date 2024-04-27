@@ -54,7 +54,7 @@ const SignInForm = () => {
         return;
       }
 
-      searchParams ? router.push(searchParams) : router.push("/");
+      searchParams ? router.push(searchParams) : router.push("/projects");
 
       toast("Sign in success ✅");
 
