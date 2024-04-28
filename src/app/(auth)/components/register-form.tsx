@@ -121,22 +121,24 @@ const RegisterForm = () => {
 
   return (
     <>
-      <div className="w-full flex justify-evenly">
+      <div className="py-4 w-full flex gap-6">
         <div className="flex items-center gap-2">
-          <div className="bg-green-400 w-8 h-8 rounded-full border flex justify-center items-center">
+          <div className=" border-green-400 w-8 h-8 rounded-full border-2 flex justify-center items-center">
             <small>1</small>
           </div>
-          <small>User info</small>
+          <small className="text-sm font-medium leading-none">User info</small>
         </div>
         <div className="flex items-center gap-2">
           <div
             className={`${
-              currentStep === 1 ? "bg-green-400" : null
-            } w-8 h-8 rounded-full border flex justify-center items-center`}
+              currentStep === 1 ? "border-green-400" : null
+            } w-8 h-8 rounded-full border-2 flex justify-center items-center`}
           >
             <small>2</small>
           </div>
-          <small>Account info</small>
+          <small className="text-sm font-medium leading-none">
+            Account info
+          </small>
         </div>
       </div>
       <Form {...form}>
