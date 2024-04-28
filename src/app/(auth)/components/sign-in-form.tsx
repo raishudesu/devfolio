@@ -66,7 +66,10 @@ const SignInForm = () => {
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full flex flex-col"
+      >
         <div className="space-y-2">
           <FormField
             control={form.control}
@@ -105,7 +108,7 @@ const SignInForm = () => {
           />
         </div>
         <Button
-          className="w-full mt-6"
+          className="self-stretch mt-6"
           type="submit"
           disabled={formState.isSubmitting}
         >

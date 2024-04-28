@@ -2,9 +2,10 @@ import { ReactNode } from "react";
 
 const AuthLayout = async ({ children }: { children: ReactNode }) => {
   return (
-    <section>
-      <h1>Auth Layout</h1>
-      <div>{children}</div>
+    <section className="w-full flex justify-center">
+      <div className="w-full flex justify-center max-w-screen-sm">
+        {children}
+      </div>
     </section>
   );
 };
