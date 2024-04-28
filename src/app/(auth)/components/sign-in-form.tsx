@@ -58,7 +58,6 @@ const SignInForm = () => {
 
       toast("Sign in success ✅");
 
-      console.log(res);
       router.refresh();
     } catch (error) {
       console.error(error);

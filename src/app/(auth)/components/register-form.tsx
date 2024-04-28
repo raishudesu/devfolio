@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { Field, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { RegisterResponse } from "@/types/types";
 import { registerFormSchema } from "@/lib/zod";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 type Inputs = z.infer<typeof registerFormSchema>;
 
@@ -26,6 +27,7 @@ type FieldName = keyof Inputs;
 
 const RegisterForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const router = useRouter();
 
@@ -45,7 +47,6 @@ const RegisterForm = () => {
   const { formState } = form;
 
   const onSubmit = async (values: z.infer<typeof registerFormSchema>) => {
-    console.log(form);
     try {
       const res = await fetch("/api/user/register", {
         method: "POST",
@@ -92,7 +93,7 @@ const RegisterForm = () => {
 
   const steps = [
     {
-      fields: ["username", "firsName", "lastName"],
+      fields: ["username", "firstName", "lastName"],
     },
     {
       fields: ["email", "password", "confirmPassword"],
@@ -107,17 +108,37 @@ const RegisterForm = () => {
     if (!output) return;
     if (currentStep < 1) {
       setCurrentStep((step) => step + 1);
+      setCurrentPage((page) => page + 2);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 0) {
       setCurrentStep((step) => step - 1);
+      setCurrentPage((page) => page - 1);
     }
   };
 
   return (
     <>
+      <div className="w-full flex justify-evenly">
+        <div className="flex items-center gap-2">
+          <div className="bg-green-400 w-8 h-8 rounded-full border flex justify-center items-center">
+            <small>1</small>
+          </div>
+          <small>User info</small>
+        </div>
+        <div className="flex items-center gap-2">
+          <div
+            className={`${
+              currentStep === 1 ? "bg-green-400" : null
+            } w-8 h-8 rounded-full border flex justify-center items-center`}
+          >
+            <small>2</small>
+          </div>
+          <small>Account info</small>
+        </div>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -125,7 +146,14 @@ const RegisterForm = () => {
         >
           <div className="space-y-2">
             {currentStep === 0 && (
-              <>
+              <motion.div
+                initial={{
+                  x: currentPage === 0 ? 0 : -25,
+                  opacity: currentPage === 0 ? 1 : 0,
+                }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 100 }}
+              >
                 <FormField
                   control={form.control}
                   name="username"
@@ -177,10 +205,14 @@ const RegisterForm = () => {
                     </FormItem>
                   )}
                 />
-              </>
+              </motion.div>
             )}
             {currentStep === 1 && (
-              <>
+              <motion.div
+                initial={{ x: 25, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 100 }}
+              >
                 <FormField
                   control={form.control}
                   name="email"
@@ -234,39 +266,51 @@ const RegisterForm = () => {
                     </FormItem>
                   )}
                 />
-              </>
+              </motion.div>
             )}
           </div>
 
           {currentStep === 0 && (
-            // CHANGING THIS BUTTON TYPE TO "BUTTON" FIXED THE BUG WHERE CLICKING NEXT TRIGGERS ALL THE INPUT VALIDATION INSTEAD OF FIRST PAGE INPUTS XP
-            <Button
-              className="self-stretch mt-6"
-              type="button"
-              onClick={nextStep}
+            <motion.div
+              initial={{
+                x: currentPage === 0 ? 0 : -25,
+                opacity: currentPage === 0 ? 1 : 0,
+              }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 100 }}
             >
-              Next
-            </Button>
+              <Button className="w-full mt-4" type="button" onClick={nextStep}>
+                Next
+              </Button>
+            </motion.div>
           )}
           {currentStep === 1 && (
-            <div className="mt-6 w-full flex flex-col-reverse gap-4 items-center justify-between">
+            <motion.div
+              initial={{ x: 25, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 100 }}
+            >
               <Button
-                className="self-stretch"
-                variant={"secondary"}
-                onClick={prevStep}
-              >
-                {"<"} Back
-              </Button>
-              <Button
-                className="self-stretch"
+                className="mt-4 w-full"
                 type="submit"
                 disabled={formState.isSubmitting}
               >
                 Register
               </Button>
-            </div>
+            </motion.div>
           )}
         </form>
+        {currentStep === 1 && (
+          <motion.div
+            initial={{ x: 25, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 100 }}
+          >
+            <Button className="w-full" variant={"secondary"} onClick={prevStep}>
+              {"<"} Back
+            </Button>
+          </motion.div>
+        )}
 
         <div className="mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-stone-400 after:ml-4 after:block after:h-px after:flex-grow after:bg-stone-400">
           or
