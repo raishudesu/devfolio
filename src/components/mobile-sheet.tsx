@@ -1,17 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
+import NavMenu from "./header/nav-menu";
+import ModeToggle from "./mode-toggle";
 
 const MobileSheet = () => {
   return (
@@ -23,31 +20,12 @@ const MobileSheet = () => {
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you&aphos;re
-            done.
-          </SheetDescription>
+          <SheetTitle className="pl-4 text-start">Devfolio</SheetTitle>
         </SheetHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+        <NavMenu className="mt-6 flex flex-col items-start gap-2" />
+        <div className="mt-6 pl-4">
+          <ModeToggle />
         </div>
-        <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

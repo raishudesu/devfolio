@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Rubik } from "next/font/google";
 import "@/styles/globals.css";
-import Header from "@/components/header";
+import Header from "@/components/header/header";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/session-provider";
