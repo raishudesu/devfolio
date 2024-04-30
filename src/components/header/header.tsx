@@ -1,10 +1,10 @@
 import React from "react";
-import ModeToggle from "../mode-toggle";
-import MobileSheet from "../mobile-sheet";
+import ModeToggle from "./mode-toggle";
+import MobileSheet from "./mobile-sheet";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import SignOutButton from "../sign-out-button";
-import SignInButtons from "../sign-in-buttons";
+import SignOutButton from "./sign-out-button";
+import SignInButtons from "./sign-in-buttons";
 import NavMenu from "./nav-menu";
 
 const Header = async () => {

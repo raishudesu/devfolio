@@ -7,7 +7,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
-import NavMenu from "./header/nav-menu";
+import NavMenu from "./nav-menu";
 import ModeToggle from "./mode-toggle";
 
 const MobileSheet = () => {
