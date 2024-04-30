@@ -19,8 +19,10 @@ export async function GET(req: Request, { params }: { params: Params }) {
       return NextResponse.json(
         {
           ok: error.ok,
-          errorName: error.name,
-          errorMessage: error.errorMessage,
+          error: {
+            errorName: error.name,
+            errorMessage: error.errorMessage,
+          },
         },
         { status: error.code }
       );

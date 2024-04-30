@@ -1,22 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { UserResponse } from "@/types/types";
+import { notFound } from "next/navigation";
 
 const getUserProfile = async (username: string): Promise<UserResponse> => {
-  const res = await fetch(
-    `http://localhost:3000/api/user/username/${username}`,
-    {
-      method: "GET",
-      next: {
-        revalidate: 5000,
-      },
-    }
-  );
+  const res = await fetch(`http://localhost:3000/api/user/${username}`, {
+    method: "GET",
+    next: {
+      revalidate: 5000,
+    },
+  });
 
   return await res.json();
 };
 
 const Profile = async ({ username }: { username: string }) => {
   const data = await getUserProfile(username);
+
+  if (data.error?.errorName === "UserNotFoundError") {
+    notFound();
+  }
 
   return (
     <section className="mt-4 w-full flex flex-col lg:items-center gap-4 max-w-screen-xl">

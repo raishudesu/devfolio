@@ -1,3 +1,4 @@
+import { UserNotFoundError } from "@/utils/errors";
 import type { User, Project, Image } from "@prisma/client";
 
 type IncludeUser = {
@@ -38,4 +39,5 @@ export type ProjectResponse = Response & {
 export type UserResponse = Response & {
   ok: boolean;
   user: User;
+  error?: any;
 };

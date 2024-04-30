@@ -6,6 +6,7 @@ import { authOptions } from "@/lib/auth";
 import SignOutButton from "./sign-out-button";
 import SignInButtons from "./sign-in-buttons";
 import NavMenu from "./nav-menu";
+import UserMenu from "./user-menu";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
@@ -18,15 +19,16 @@ const Header = async () => {
           </div>
           <div className="font-semibold text-md">Devfolio</div>
           <div className="hidden md:block">
-            <NavMenu />
+            <NavMenu className="flex gap-2" />
           </div>
         </div>
 
         <div className="hidden md:flex gap-2 items-center">
-          {session ? <SignOutButton /> : <SignInButtons />}
-          <div>
+          {session ? null : <SignInButtons />}
+          <UserMenu />
+          {/* <div>
             <ModeToggle />
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
