@@ -26,9 +26,9 @@ const Header = async () => {
         <div className="hidden md:flex gap-2 items-center">
           {session ? null : <SignInButtons />}
           <UserMenu />
-          {/* <div>
+          <div>
             <ModeToggle />
-          </div> */}
+          </div>
         </div>
       </div>
     </header>

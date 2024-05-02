@@ -1,5 +1,3 @@
-"use client";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,12 +13,10 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import SignOutButton from "./sign-out-button";
-import ModeToggle from "./mode-toggle";
-import { useSession } from "next-auth/react";
 
-const UserMenu = () => {
-  const session = useSession();
-  if (session.status === "unauthenticated") return null;
+const UserMenu = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) return null;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,15 +31,12 @@ const UserMenu = () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-            <Link href={`/${session.data?.user.username}`}>Profile</Link>
+          <DropdownMenuItem>
+            <Link href={`/${session?.user.username}`}>Profile</Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <SignOutButton />
           </DropdownMenuItem>
-          {/* <DropdownMenuItem>
-            <ModeToggle />
-          </DropdownMenuItem> */}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

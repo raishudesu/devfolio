@@ -1,6 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { authOptions } from "@/lib/auth";
 import { UserResponse } from "@/types/types";
+import { Ellipsis, EllipsisVertical } from "lucide-react";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
+import EditProfileBtns from "./edit-profile-btns";
 
 const getUserProfile = async (username: string): Promise<UserResponse> => {
   const res = await fetch(`http://localhost:3000/api/user/${username}`, {
@@ -14,11 +18,17 @@ const getUserProfile = async (username: string): Promise<UserResponse> => {
 };
 
 const Profile = async ({ username }: { username: string }) => {
+  const session = await getServerSession(authOptions);
+
   const data = await getUserProfile(username);
 
   if (data.error?.errorName === "UserNotFoundError") {
     notFound();
   }
+
+  const sessionUsername = session?.user.username;
+
+  const isCurrentUser = username === sessionUsername;
 
   return (
     <section className="mt-4 w-full flex flex-col lg:items-center gap-4 max-w-screen-xl">
@@ -40,15 +50,21 @@ const Profile = async ({ username }: { username: string }) => {
                 1,000 followers 1,000 following 1,000 likes
               </small>
             </div>
-            <div className="flex gap-4">
-              <Button size={"lg"}>Get in touch</Button>
-              <Button size={"lg"} variant={"secondary"}>
-                Follow
-              </Button>
-              <Button size={"lg"} variant={"secondary"}>
-                ...
-              </Button>
-            </div>
+            {isCurrentUser ? (
+              <div className="flex gap-2">
+                <EditProfileBtns />
+              </div>
+            ) : (
+              <div className="flex gap-4">
+                <Button size={"lg"}>Get in touch</Button>
+                <Button size={"lg"} variant={"secondary"}>
+                  Follow
+                </Button>
+                <Button size={"lg"} variant={"secondary"}>
+                  ...
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
