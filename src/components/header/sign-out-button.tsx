@@ -1,19 +1,17 @@
 "use client";
 
-import { Button } from "../ui/button";
+import Link from "next/link";
 import { signOut } from "next-auth/react";
+import { forwardRef } from "react";
 
-const SignOutButton = () => {
+const SignOutButton = forwardRef<HTMLAnchorElement>((props, forwardedRef) => {
   return (
-    <Button
-      variant={"link"}
-      size={"sm"}
-      className="p-0 hover:no-underline"
-      onClick={() => signOut()}
-    >
+    <Link href="" ref={forwardedRef} {...props} onClick={() => signOut()}>
       Sign out
-    </Button>
+    </Link>
   );
-};
+});
+
+SignOutButton.displayName = "SignOutButton";
 
 export default SignOutButton;

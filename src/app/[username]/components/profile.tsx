@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { authOptions } from "@/lib/auth";
 import { UserResponse } from "@/types/types";
-import { Ellipsis, EllipsisVertical } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
-import EditProfileBtns from "./edit-profile-btns";
+import CurrentProfileBtns from "./current-user-profile-btns";
 
 const getUserProfile = async (username: string): Promise<UserResponse> => {
   const res = await fetch(`http://localhost:3000/api/user/${username}`, {
@@ -52,7 +51,7 @@ const Profile = async ({ username }: { username: string }) => {
             </div>
             {isCurrentUser ? (
               <div className="flex gap-2">
-                <EditProfileBtns />
+                <CurrentProfileBtns />
               </div>
             ) : (
               <div className="flex gap-4">

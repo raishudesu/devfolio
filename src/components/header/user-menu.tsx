@@ -17,6 +17,7 @@ import SignOutButton from "./sign-out-button";
 const UserMenu = async () => {
   const session = await getServerSession(authOptions);
   if (!session) return null;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -31,10 +32,12 @@ const UserMenu = async () => {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <Link href={`/${session?.user.username}`}>Profile</Link>
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <Link href={`/${session?.user.username}`} className="w-full">
+              Profile
+            </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer">
             <SignOutButton />
           </DropdownMenuItem>
         </DropdownMenuGroup>

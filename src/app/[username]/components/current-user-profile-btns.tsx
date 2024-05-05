@@ -4,10 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Ellipsis } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const EditProfileBtns = () => {
+const CurrentProfileBtns = () => {
   const router = useRouter();
   return (
     <>
+      <Button onClick={() => router.push("/uploads/new")}>
+        Upload project
+      </Button>
       <Button
         variant={"secondary"}
         onClick={() => router.push("/account/profile")}
@@ -21,4 +24,4 @@ const EditProfileBtns = () => {
   );
 };
 
-export default EditProfileBtns;
+export default CurrentProfileBtns;
