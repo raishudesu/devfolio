@@ -7,13 +7,17 @@ import Link from "next/link";
 
 const ProjectCard = ({ projectId, user, url }: ProjectCard) => {
   return (
-    <Link
-      href={`/projects/${projectId}`}
-      className="w-full flex flex-col gap-2 cursor-pointer"
-    >
-      <AspectRatio ratio={16 / 9}>
-        <Image src={url} alt={url} fill className="rounded-md object-cover" />
-      </AspectRatio>
+    <div className="w-full flex flex-col gap-2">
+      <Link href={`/projects/${projectId}`} className="cursor-pointer">
+        <AspectRatio ratio={16 / 9}>
+          <Image
+            src={url}
+            alt={url}
+            fill
+            className="rounded-md object-cover "
+          />
+        </AspectRatio>
+      </Link>
       <div className="flex justify-between items-center gap-2">
         <div className="flex gap-2 items-center">
           <div className="w-6 h-6 rounded-full bg-slate-400"></div>
@@ -32,7 +36,7 @@ const ProjectCard = ({ projectId, user, url }: ProjectCard) => {
           <small className="text-xs text-muted-foreground">123</small>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

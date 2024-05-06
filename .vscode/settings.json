@@ -3,5 +3,12 @@
   "vscord.status.problems.enabled": false,
   "vscord.enabled": true,
   "vscord.app.privacyMode.enable": false,
-  "cSpell.ignoreWords": ["Devfolio", "Doesn", "Tanstack", "hookform", "sonner"]
+  "cSpell.ignoreWords": [
+    "Devfolio",
+    "Doesn",
+    "Tanstack",
+    "hookform",
+    "sonner",
+    "supabase"
+  ]
 }
