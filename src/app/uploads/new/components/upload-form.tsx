@@ -2,7 +2,7 @@
 
 import supabase from "@/lib/storage";
 import { useSession } from "next-auth/react";
-import { useRef, useState } from "react";
+import { FormEvent, MutableRefObject, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 async function uploadImage(userId: string, image: string) {
@@ -26,7 +26,7 @@ async function getPublicUrl(path: string) {
 }
 
 const UploadForm = () => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<string | File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   1;
 
@@ -34,19 +34,26 @@ const UploadForm = () => {
 
   const user = session.data?.user;
 
-  const onUpload = async (e) => {
+  const onUpload = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(image);
-    const data = await uploadImage(user?.id!, image);
+    const data = await uploadImage(user?.id!, image as string);
     await getPublicUrl(data?.path!);
   };
+
   return (
     <div>
       <form onSubmit={onUpload}>
         <input
           type="file"
           ref={inputRef}
-          onChange={() => setImage(inputRef.current?.files[0])}
+          onChange={() => {
+            if (inputRef.current?.files) {
+              setImage(inputRef.current.files[0]);
+              return;
+            }
+            setImage(null);
+          }}
         />
         <button type="submit">upload</button>
       </form>
