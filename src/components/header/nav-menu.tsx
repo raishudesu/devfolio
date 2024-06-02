@@ -11,12 +11,16 @@ import {
 
 const navLinks: { title: string; href: string }[] = [
   {
-    title: "Dev Projects",
+    title: "Projects",
     href: "/projects",
   },
   {
     title: "Top Developers",
     href: "/top-developers",
+  },
+  {
+    title: "Generate Ideas",
+    href: "/generate",
   },
 ];
 

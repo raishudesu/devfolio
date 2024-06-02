@@ -14,7 +14,7 @@ const ProjectCard = ({ projectId, user, url }: ProjectCard) => {
             src={url}
             alt={url}
             fill
-            className="rounded-md object-cover "
+            className="rounded-md object-cover border"
           />
         </AspectRatio>
       </Link>

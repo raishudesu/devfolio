@@ -29,10 +29,16 @@ const featureList = [
 const Features = () => {
   return (
     <>
-      <h2 className="text-center mt-10 scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-        What&rsquo;s in Devfolio?
+      <h2 className="text-center mt-12 scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+        Google&lsquo;s Gemini API Integration ✨
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <p className="leading-7 [&:not(:first-child)]:mt-6 text-center">
+        Not just uses Gemini Generative AI for brainstorming project ideas,
+        Devfolio is about developers sharing their existing projects as
+        development and design inspirations to increase their employment
+        probability.
+      </p>
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
         {featureList.map(({ title, image, desc }, index) => (
           <FeatureCard title={title} image={image} desc={desc} key={index} />
         ))}
