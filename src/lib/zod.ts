@@ -1,4 +1,4 @@
-import { object, z } from "zod";
+import { z } from "zod";
 
 export const userServerSchema = z
   .object({
@@ -62,6 +62,7 @@ export const projectSchema = z
     userId: z.string({ required_error: "User ID is required" }),
     projectName: z.string({ required_error: "Project name is required" }),
     description: z.string({ required_error: "Description is required" }),
+    images: z.array(z.string()),
   })
   .strict();
 
@@ -87,3 +88,13 @@ export const imageObjectSchema = z
     url: z.string({ required_error: "Image URL is required" }).trim(),
   })
   .strict();
+
+// export const uploadProjectSchema = z.object({
+//   projectName: z.string({ required_error: "Project name is required" }).trim(),
+//   description: z
+//     .string({ required_error: "Project description is required" })
+//     .trim(),
+//   images: z
+//     .instanceof(FileList)
+//     .refine((file) => file?.length == 1, "At least one image is required."),
+// });

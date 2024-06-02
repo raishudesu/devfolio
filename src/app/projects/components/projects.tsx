@@ -17,13 +17,17 @@ const Projects = async () => {
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {data?.projects?.map(
           ({ id, userId, user, projectName, description, images }) => (
-            <ProjectCard
-              projectId={id}
-              projectName={projectName}
-              url={images[0].url}
-              user={user}
-              key={id}
-            />
+            <>
+              {images ? (
+                <ProjectCard
+                  projectId={id}
+                  projectName={projectName}
+                  url={images[0].url}
+                  user={user}
+                  key={id}
+                />
+              ) : null}
+            </>
           )
         )}
       </div>

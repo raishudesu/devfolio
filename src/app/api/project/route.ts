@@ -6,18 +6,22 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    console.log(body);
 
-    const { userId, description, projectName } = projectSchema.parse(body);
+    // const validatedBody = projectSchema.parse(body);
+    // const { userId, description, projectName, images } =
+    //   projectSchema.parse(body);
 
-    // await getUser(userId);
+    // // await getUser(userId);
 
-    const projectData = {
-      userId,
-      projectName,
-      description,
-    };
+    // const projectData = {
+    //   userId,
+    //   projectName,
+    //   description,
+    //   images,
+    // };
 
-    const project = await createProject(projectData);
+    const project = await createProject(body);
 
     return NextResponse.json({ ok: true, project }, { status: 201 });
   } catch (error) {
