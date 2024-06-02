@@ -89,12 +89,19 @@ export const imageObjectSchema = z
   })
   .strict();
 
-// export const uploadProjectSchema = z.object({
-//   projectName: z.string({ required_error: "Project name is required" }).trim(),
-//   description: z
-//     .string({ required_error: "Project description is required" })
-//     .trim(),
-//   images: z
-//     .instanceof(FileList)
-//     .refine((file) => file?.length == 1, "At least one image is required."),
-// });
+export const uploadProjectSchema = z.object({
+  projectName: z
+    .string({ required_error: "Project name is required" })
+    .trim()
+    .min(2, "Project name must be at least 2 characters")
+    .max(55, "Project name must not exceed 55 characters"),
+  description: z
+    .string({ required_error: "Project description is required" })
+    .trim()
+    .min(2, "Project description must be at least 5 characters")
+    .max(55, "Project description must not exceed 55 characters"),
+  images:
+    typeof window === "undefined"
+      ? z.any({ required_error: "An image is required" })
+      : z.instanceof(FileList).optional(),
+});

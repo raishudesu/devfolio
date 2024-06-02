@@ -2,7 +2,12 @@ import ProjectCard from "./project-card";
 import { ProjectsResponse } from "@/types/types";
 
 const getProjects = async (): Promise<ProjectsResponse> => {
-  const data = await fetch("http://localhost:3000/api/project");
+  const data = await fetch("http://localhost:3000/api/project", {
+    cache: "no-store",
+    next: {
+      revalidate: 50,
+    },
+  });
   return await data.json();
 };
 
@@ -15,21 +20,19 @@ const Projects = async () => {
         Projects
       </h1>
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {data?.projects?.map(
-          ({ id, userId, user, projectName, description, images }) => (
-            <>
-              {images ? (
-                <ProjectCard
-                  projectId={id}
-                  projectName={projectName}
-                  url={images[0].url}
-                  user={user}
-                  key={id}
-                />
-              ) : null}
-            </>
-          )
-        )}
+        {data?.projects?.map(({ id, user, projectName, images }) => (
+          <div key={id}>
+            {images ? (
+              <ProjectCard
+                projectId={id}
+                projectName={projectName}
+                url={images[0].url}
+                user={user}
+                key={id}
+              />
+            ) : null}
+          </div>
+        ))}
       </div>
     </section>
   );
