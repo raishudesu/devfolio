@@ -1,5 +1,6 @@
 "use client";
 
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,8 +18,9 @@ import { ProjectResponse } from "@/types/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
@@ -81,7 +83,10 @@ const postProjectData = async (
 };
 
 const UploadForm = () => {
-  // const [files, setFiles] = useState<File[] | FileList | null>(null);
+  const [images, setImages] = useState<File[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
   const session = useSession();
@@ -98,6 +103,8 @@ const UploadForm = () => {
       images: [],
     },
   });
+
+  const { formState } = form;
 
   const fileRef = form.register("images");
 
@@ -136,12 +143,30 @@ const UploadForm = () => {
     }
   };
 
-  const { formState } = form;
+  const imageInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) {
+        const imageList: File[] = Array.from(event.target.files);
+        form.setValue("images", event.target.files);
+        setImages(imageList);
+
+        const urls = imageList.map((image) => URL.createObjectURL(image));
+        setImageUrls(urls);
+      }
+    },
+    []
+  );
+
+  // to avoid the unnecessary image rendering (flickering)
+  const memoizedImageUrls = useMemo(() => imageUrls, [imageUrls]);
 
   return (
     <div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onUpload)}>
+        <form
+          onSubmit={form.handleSubmit(onUpload)}
+          className="flex flex-col gap-4"
+        >
           <FormField
             control={form.control}
             name="projectName"
@@ -167,6 +192,7 @@ const UploadForm = () => {
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
+                    rows={6}
                     placeholder="Write something about your project"
                     {...field}
                     disabled={formState.isSubmitting}
@@ -187,8 +213,11 @@ const UploadForm = () => {
                     type="file"
                     placeholder="Project images"
                     multiple
-                    {...fileRef}
+                    // {...fileRef}
+                    accept="image/*"
+                    ref={imageInputRef}
                     disabled={formState.isSubmitting}
+                    onChange={imageInputChange}
                   />
                 </FormControl>
                 <FormMessage />
@@ -197,7 +226,7 @@ const UploadForm = () => {
           />
           <Button
             type="submit"
-            className="mt-2"
+            className="self-stretch md:self-start flex gap-2 items-center rounded-full p-6"
             disabled={formState.isSubmitting}
           >
             {formState.isSubmitting ? (
@@ -207,6 +236,25 @@ const UploadForm = () => {
           </Button>
         </form>
       </Form>
+      {images.length > 0 && (
+        <div>
+          <h3 className="py-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+            Selected Images:
+          </h3>
+          <div className="grid gap-4">
+            {memoizedImageUrls.map((url, index) => (
+              <AspectRatio ratio={16 / 9} key={index}>
+                <Image
+                  src={url}
+                  alt={`Image ${index}`}
+                  fill
+                  className="h-auto max-w-full rounded-lg"
+                />
+              </AspectRatio>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -99,9 +99,11 @@ export const uploadProjectSchema = z.object({
     .string({ required_error: "Project description is required" })
     .trim()
     .min(2, "Project description must be at least 5 characters")
-    .max(55, "Project description must not exceed 55 characters"),
+    .max(1500, "Project description must not exceed 1500 characters"),
   images:
     typeof window === "undefined"
       ? z.any({ required_error: "An image is required" })
-      : z.instanceof(FileList).optional(),
+      : z
+          .instanceof(FileList, { message: "Add at least one image" })
+          .optional(),
 });
