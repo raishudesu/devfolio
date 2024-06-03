@@ -11,15 +11,15 @@ import {
 
 const navLinks: { title: string; href: string }[] = [
   {
-    title: "Projects",
+    title: "Projects 📝",
     href: "/projects",
   },
   {
-    title: "Top Developers",
+    title: "Top Developers 👨‍💻",
     href: "/top-developers",
   },
   {
-    title: "Generate Ideas",
+    title: "Generate Ideas ✨",
     href: "/generate",
   },
 ];

@@ -32,7 +32,7 @@ const Features = () => {
       <h2 className="text-center mt-12 scroll-m-20 pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
         Google&lsquo;s Gemini API Integration ✨
       </h2>
-      <p className="leading-7 [&:not(:first-child)]:mt-6 text-center">
+      <p className="leading-normal [&:not(:first-child)]:mt-6 text-center light:text-zinc-900">
         Not just uses Gemini Generative AI for brainstorming project ideas,
         Devfolio is about developers sharing their existing projects as
         development and design inspirations to increase their employment

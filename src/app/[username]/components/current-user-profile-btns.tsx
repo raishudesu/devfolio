@@ -8,16 +8,20 @@ const CurrentProfileBtns = () => {
   const router = useRouter();
   return (
     <>
-      <Button onClick={() => router.push("/uploads/new")}>
+      <Button
+        className="hover:bg-[#6C63FF] p-6 rounded-full"
+        onClick={() => router.push("/uploads/new")}
+      >
         Upload project
       </Button>
       <Button
+        className="p-6 rounded-full"
         variant={"secondary"}
         onClick={() => router.push("/account/profile")}
       >
         Edit profile
       </Button>
-      <Button variant={"secondary"} className="px-3 rounded-full">
+      <Button variant={"secondary"} className="p-6 rounded-full">
         <Ellipsis size={20} />
       </Button>
     </>

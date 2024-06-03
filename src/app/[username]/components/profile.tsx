@@ -50,7 +50,7 @@ const Profile = async ({ username }: { username: string }) => {
               </small>
             </div>
             {isCurrentUser ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 items-center">
                 <CurrentProfileBtns />
               </div>
             ) : (
