@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkles, SquareUserRound } from "lucide-react";
+import { Sparkle, Sparkles, SquareUserRound } from "lucide-react";
 import {
   GoogleGenerativeAI,
   HarmCategory,
@@ -81,30 +81,33 @@ const Chat = () => {
     <div className="mt-6 w-full h-full flex flex-col gap-4 ">
       {chatHistory.length === 0 ? <StartingDisplay /> : null}
       <div className="h-full flex flex-col justify-between">
-        <div className="h-full max-h-[75vh] overflow-y-scroll">
-          <div className="py-6 w-full grid gap-6 ">
-            {chatHistory.map((message, index) => (
-              <div key={index} className="flex gap-2 rounded-lg border p-6">
-                <div>
-                  {message.role === "user" ? (
-                    <SquareUserRound size={20} />
-                  ) : (
-                    <Sparkles size={20} />
-                  )}
+        {chatHistory.length === 0 ? (
+          <div className="h-full max-h-[75vh]"></div>
+        ) : (
+          <div className="h-full max-h-[75vh] overflow-y-scroll">
+            <div className="py-6 w-full grid gap-6 ">
+              {chatHistory.map((message, index) => (
+                <div key={index} className="flex gap-2 rounded-lg border p-6">
+                  <div>
+                    {message.role === "user" ? (
+                      <SquareUserRound size={20} color="#6C63FF" />
+                    ) : (
+                      <Sparkles size={20} color="#6C63FF" />
+                    )}
+                  </div>
+                  <div className="text-muted-foreground">
+                    {message.parts[0].text}
+                  </div>
                 </div>
-                <div className="text-muted-foreground">
-                  {message.parts[0].text}
-                </div>
+              ))}
+              <div className="px-6">
+                {loading ? (
+                  <Sparkle size={20} className="animate-spin" color="#6C63FF" />
+                ) : null}
               </div>
-            ))}
-
-            <div className="px-6">
-              {loading ? (
-                <Sparkles size={20} className="animate-pulse" />
-              ) : null}
             </div>
           </div>
-        </div>
+        )}
         <div className="flex gap-2">
           <form className="w-full flex gap-2" onSubmit={onPrompt}>
             <Input
