@@ -37,7 +37,7 @@ const Header = async () => {
 
         <div className="hidden md:flex gap-2 items-center">
           <div>
-            <Input placeholder="🔎 Search..." />
+            <Input className="p-6 rounded-full" placeholder="🔎 Search..." />
           </div>
           {session ? null : <SignInButtons />}
           <UserMenu />
