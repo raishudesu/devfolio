@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 const GeneratePage = async () => {
   return (
-    <section className="h-screen w-full max-w-screen-md px-2 flex max-h-[90vh] flex-col">
+    <section className="h-screen w-full max-w-screen-lg px-2 flex max-h-[90vh] flex-col">
       {/* <div className="mt-6">
         
       </div> */}
