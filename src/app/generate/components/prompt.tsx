@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSanitize from "rehype-sanitize";
-import { Card, CardContent } from "@/components/ui/card";
 
 const Prompt = ({ response }: { response: string | undefined }) => {
   const { theme } = useTheme();

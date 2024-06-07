@@ -42,13 +42,13 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
               </div>
             </div>
             <div className="flex gap-2">
-              <Button variant={"secondary"}>
+              <Button className="p-6 rounded-full">Contact</Button>
+              <Button className="p-6 rounded-full" variant={"secondary"}>
                 <Heart size={20} />
               </Button>
-              <Button variant={"secondary"}>
+              <Button className="p-6 rounded-full" variant={"secondary"}>
                 <Bookmark size={20} />
               </Button>
-              <Button>Contact</Button>
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
                 src={url}
                 alt={url}
                 fill
-                className="rounded-md object-cover"
+                className="rounded-md object-cover border"
               />
             </AspectRatio>
           ))}

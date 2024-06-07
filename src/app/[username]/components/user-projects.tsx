@@ -1,6 +1,7 @@
 import ProjectCard from "@/app/projects/components/project-card";
 import { ProjectsResponse } from "@/types/types";
 import Image from "next/image";
+import AddProjectCard from "./add-project-card";
 
 const getUserProjects = async (username: string): Promise<ProjectsResponse> => {
   const res = await fetch(
@@ -15,21 +16,25 @@ const UserProjects = async ({ username }: { username: string }) => {
   const { projects } = data;
 
   return (
-    <section className="w-full max-w-screen-2xl">
+    <section className="w-full max-w-screen-xl">
       <div className=" p-4">
         <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
           Featured Projects
         </h2>
         <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects?.map(({ id, projectName, images, user }) => (
-            <ProjectCard
-              projectId={id}
-              projectName={projectName}
-              user={user}
-              url={images[0].url}
-              key={id}
-            />
-          ))}
+          {projects.length > 0 ? (
+            projects?.map(({ id, projectName, images, user }) => (
+              <ProjectCard
+                projectId={id}
+                projectName={projectName}
+                user={user}
+                url={images[0].url}
+                key={id}
+              />
+            ))
+          ) : (
+            <AddProjectCard />
+          )}
         </div>
       </div>
     </section>

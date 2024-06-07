@@ -18,7 +18,7 @@ const Header = async () => {
   const session = await getServerSession(authOptions);
   return (
     <header className="flex justify-center h-20 shadow-md">
-      <div className="px-2 w-full max-w-screen-2xl flex items-center justify-between">
+      <div className="px-2 w-full max-w-screen-xl flex items-center justify-between">
         <div className="flex gap-4 md:gap-12 items-center">
           <div className="md:hidden">
             <MobileSheet />

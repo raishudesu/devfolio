@@ -14,9 +14,6 @@ import { ArrowDown } from "lucide-react";
 const getProjects = async (): Promise<ProjectsResponse> => {
   const data = await fetch("http://localhost:3000/api/project", {
     cache: "no-store",
-    next: {
-      revalidate: 50,
-    },
   });
   return await data.json();
 };
