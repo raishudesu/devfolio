@@ -9,25 +9,101 @@ import StartingDisplay from "./starting-display";
 import { toast } from "sonner";
 import Prompt from "./prompt";
 import { genAIModel, generationConfig } from "@/lib/gemini";
+import { useSession } from "next-auth/react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const Chat = () => {
+type TChat = {
+  conversationId?: string;
+  contentHistory?: Content[];
+};
+
+const Chat = ({ conversationId, contentHistory }: TChat) => {
   const [prompt, setPrompt] = useState<string>("");
-  const [chatHistory, setChatHistory] = useState<Content[]>([]);
+  const [chatHistory, setChatHistory] = useState<Content[]>(() =>
+    contentHistory ? contentHistory : []
+  );
   const [loading, setLoading] = useState(false);
   const conversationRef = useRef<HTMLDivElement>(null);
+  const session = useSession();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const chatSession = genAIModel.startChat({
     generationConfig,
     // safetySettings: Adjust safety settings
     // See https://ai.google.dev/gemini-api/docs/safety-settings
-    history: chatHistory,
+    history: contentHistory ? contentHistory : chatHistory,
   });
+
+  const saveConversation = async (
+    userId: string | undefined,
+    conversation: string
+  ) => {
+    try {
+      const response = await fetch(`/api/ai/user/${userId}/generation/save`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: conversation }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to save conversation");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const updateConversation = async (
+    userId: string | undefined,
+    content: string
+  ) => {
+    try {
+      const res = await fetch(
+        `/api/ai/user/${userId}/generation/${conversationId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ content }),
+        }
+      );
+    } catch (error) {}
+  };
 
   useEffect(() => {
     if (conversationRef.current) {
       conversationRef.current.scrollTop = conversationRef.current.scrollHeight;
     }
   }, [loading]);
+
+  useEffect(() => {
+    const handleRouteChange = async () => {
+      if (chatHistory.length > 0 && pathname === "/generate/new") {
+        await saveConversation(
+          session.data?.user.id,
+          JSON.stringify(chatHistory)
+        );
+        return;
+      }
+
+      await updateConversation(
+        session.data?.user.id,
+        JSON.stringify(chatHistory)
+      );
+    };
+
+    // const url = `${pathname}?${searchParams}`;
+    // window.addEventListener("beforeunload", handleRouteChange);
+
+    return () => {
+      // console.log(url);
+      handleRouteChange();
+      // window.removeEventListener("beforeunload", handleRouteChange);
+    };
+  }, [pathname]);
 
   const onPrompt = async (e: FormEvent) => {
     e.preventDefault();
@@ -63,7 +139,7 @@ const Chat = () => {
   };
 
   return (
-    <div className="mt-3 w-full h-full flex flex-col gap-4 ">
+    <div className="pt-4 w-full h-full flex flex-col gap-4 ">
       {chatHistory.length === 0 ? <StartingDisplay /> : null}
       <div className="w-full h-full flex flex-col justify-between">
         {chatHistory.length === 0 ? (

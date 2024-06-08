@@ -107,3 +107,7 @@ export const uploadProjectSchema = z.object({
           .instanceof(FileList, { message: "Add at least one image" })
           .optional(),
 });
+
+export const geminiConversationSchema = z.object({
+  content: z.string({ required_error: "Conversation content is required" }),
+});

@@ -20,7 +20,7 @@ const navLinks: { title: string; href: string }[] = [
   },
   {
     title: "Generate Ideas ✨",
-    href: "/generate",
+    href: "/generate/new",
   },
 ];
 
