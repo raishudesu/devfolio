@@ -28,16 +28,21 @@ const UserMenu = async () => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="py-3">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem asChild className="cursor-pointer">
+          <DropdownMenuItem asChild className="cursor-pointer p-3">
             <Link href={`/${session?.user.username}`} className="w-full">
               Profile
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuItem asChild className="cursor-pointer">
+          <DropdownMenuItem asChild className="cursor-pointer p-3">
+            <Link href={`/settings/profile`} className="w-full">
+              Settings
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild className="cursor-pointer p-3">
             <SignOutButton />
           </DropdownMenuItem>
         </DropdownMenuGroup>

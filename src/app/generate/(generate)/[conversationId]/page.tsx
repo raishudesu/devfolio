@@ -1,6 +1,7 @@
 import Chat from "../components/chat";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { notFound } from "next/navigation";
 
 const getGeminiConversation = async (
   userId: string,
@@ -29,6 +30,8 @@ const ConversationPage = async ({
     session?.user.id as string,
     params.conversationId as string
   );
+
+  if (!contentHistory.content) return notFound();
 
   const content = JSON.parse(contentHistory.content.content);
 

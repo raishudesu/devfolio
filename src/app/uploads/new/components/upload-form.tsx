@@ -143,6 +143,14 @@ const UploadForm = () => {
     }
   };
 
+  const handleClearImages = () => {
+    setImages([]);
+    form.setValue("images", []);
+    if (imageInputRef.current) {
+      imageInputRef.current.value = "";
+    }
+  };
+
   const imageInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (event.target.files) {
@@ -161,7 +169,7 @@ const UploadForm = () => {
   const memoizedImageUrls = useMemo(() => imageUrls, [imageUrls]);
 
   return (
-    <div>
+    <div className="grid gap-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onUpload)}
@@ -238,9 +246,14 @@ const UploadForm = () => {
       </Form>
       {images.length > 0 && (
         <div>
-          <h3 className="py-4 scroll-m-20 text-2xl font-semibold tracking-tight">
-            Selected Images:
-          </h3>
+          <div className="flex justify-between items-center">
+            <h3 className="py-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+              Selected Images:
+            </h3>
+            <Button variant={"ghost"} onClick={handleClearImages}>
+              Clear all
+            </Button>
+          </div>
           <div className="grid gap-4">
             {memoizedImageUrls.map((url, index) => (
               <AspectRatio ratio={16 / 9} key={index}>
