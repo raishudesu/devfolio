@@ -44,6 +44,9 @@ export const getGeminiConversations = async (userId: string) => {
       where: {
         userId,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     return conversations;

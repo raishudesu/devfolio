@@ -10,11 +10,19 @@ import { toast } from "sonner";
 import Prompt from "./prompt";
 import { genAIModel, generationConfig } from "@/lib/gemini";
 import { useSession } from "next-auth/react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { z } from "zod";
+import { geminiConversationSchema } from "@/lib/zod";
+import type { GeminiConversation } from "@prisma/client";
 
 type TChat = {
   conversationId?: string;
   contentHistory?: Content[];
+};
+
+type GeminiFetchResponse = z.infer<typeof geminiConversationSchema> & {
+  ok: boolean;
+  content: GeminiConversation;
 };
 
 const Chat = ({ conversationId, contentHistory }: TChat) => {
@@ -26,32 +34,34 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
   const conversationRef = useRef<HTMLDivElement>(null);
   const session = useSession();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const router = useRouter();
 
   const chatSession = genAIModel.startChat({
     generationConfig,
-    // safetySettings: Adjust safety settings
-    // See https://ai.google.dev/gemini-api/docs/safety-settings
     history: contentHistory ? contentHistory : chatHistory,
   });
 
-  const saveConversation = async (
+  const createConversation = async (
     userId: string | undefined,
     conversation: string
-  ) => {
+  ): Promise<GeminiFetchResponse | undefined> => {
+    if (!userId) return;
     try {
-      const response = await fetch(`/api/ai/user/${userId}/generation/save`, {
+      const res = await fetch(`/api/ai/user/${userId}/generation/save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ content: conversation }),
       });
-      if (!response.ok) {
+
+      if (!res.ok) {
         throw new Error("Failed to save conversation");
       }
-    } catch (error) {
+      return await res.json();
+    } catch (error: any) {
       console.error(error);
+      return error;
     }
   };
 
@@ -59,6 +69,8 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
     userId: string | undefined,
     content: string
   ) => {
+    if (!conversationId) return;
+
     try {
       const res = await fetch(
         `/api/ai/user/${userId}/generation/${conversationId}`,
@@ -70,7 +82,11 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
           body: JSON.stringify({ content }),
         }
       );
-    } catch (error) {}
+
+      return res;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -82,7 +98,7 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
   useEffect(() => {
     const handleRouteChange = async () => {
       if (chatHistory.length > 0 && pathname === "/generate/new") {
-        await saveConversation(
+        await createConversation(
           session.data?.user.id,
           JSON.stringify(chatHistory)
         );
@@ -95,15 +111,28 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
       );
     };
 
-    // const url = `${pathname}?${searchParams}`;
-    // window.addEventListener("beforeunload", handleRouteChange);
-
     return () => {
-      // console.log(url);
       handleRouteChange();
-      // window.removeEventListener("beforeunload", handleRouteChange);
     };
   }, [pathname]);
+
+  useEffect(() => {
+    const handleBeforeUnload = async (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      if (chatHistory.length > 0) {
+        await updateConversation(
+          session.data?.user.id,
+          JSON.stringify(chatHistory)
+        );
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, [chatHistory, session.data?.user.id]);
 
   const onPrompt = async (e: FormEvent) => {
     e.preventDefault();
@@ -125,6 +154,18 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
           ...prevHistory,
           { role: "model", parts: [{ text: result.response.text() }] }, // Gemini response with parts as an array of response text
         ]);
+      }
+
+      if (!conversationId) {
+        const conversation = await createConversation(
+          session.data?.user.id,
+          JSON.stringify(chatHistory)
+        );
+
+        if (conversation?.ok) {
+          router.push(`/generate/${conversation.content.id}`);
+          router.refresh();
+        }
       }
     } catch (error) {
       setLoading(false);
@@ -149,7 +190,7 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
             ref={conversationRef}
             className="w-full h-full max-h-[75vh] overflow-y-scroll no-scrollbar"
           >
-            <div className="py-6 w-full flex flex-col gap-6">
+            <div className="py-6 w-full flex flex-col gap-3">
               {chatHistory.map((message, index) => (
                 <div
                   key={index}

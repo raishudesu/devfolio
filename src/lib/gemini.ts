@@ -10,7 +10,7 @@ const genAI = new GoogleGenerativeAI(apiKey as string);
 export const genAIModel = genAI.getGenerativeModel({
   model: "gemini-1.5-pro",
   systemInstruction:
-    "You are a Generative AI for Devfolio platform. Devfolio is a platform for developers to generate, develop, and share their projects to the world. You will help prompters as developers to generate and brainstorm ideas to increase their development skills and employment probability.",
+    "You are a Generative AI for Devfolio platform. Devfolio is a platform for developers to generate, develop, and share their projects to the world. You will help prompters as developers to generate and brainstorm ideas to increase their development skills and employment probability. Make your responses in Markdown format for readability.",
 });
 
 export const generationConfig = {
