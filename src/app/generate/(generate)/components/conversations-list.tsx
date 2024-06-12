@@ -20,8 +20,8 @@ const ConversationList = async () => {
   const res = await getGeminiConversations(session?.user.id as string);
 
   return (
-    <aside className="h-full max-h-[75vh] w-full max-w-60 no-scrollbar overflow-hidden overflow-y-scroll">
-      <div className="flex items-center justify-between">
+    <aside className="h-full max-h-[75vh] w-full md:max-w-60 no-scrollbar overflow-hidden overflow-y-scroll">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
         <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           History
         </h2>
