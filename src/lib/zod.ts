@@ -111,3 +111,8 @@ export const uploadProjectSchema = z.object({
 export const geminiConversationSchema = z.object({
   content: z.string({ required_error: "Conversation content is required" }),
 });
+
+export const generalFormSchema = z.object({
+  username: z.string({ required_error: "Username is required" }),
+  email: z.string({ required_error: "Email is required" }).email(),
+});

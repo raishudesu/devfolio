@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { generalFormSchema } from "@/lib/zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -17,11 +18,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-
-const generalFormSchema = z.object({
-  username: z.string({ required_error: "Username is required" }),
-  email: z.string({ required_error: "Email is required" }).email(),
-});
 
 const saveGeneralChanges = async (
   username: string,

@@ -114,13 +114,13 @@ export const getUserByUsername = async (username: string) => {
 };
 
 export const updateUser = async (
-  username: string,
-  data: { username: string; email: string }
+  usernameParams: string,
+  body: { username: string; email: string }
 ) => {
   try {
     const isUsernameExists = await prisma.user.findUnique({
       where: {
-        username: data.username,
+        username: body.username,
       },
     });
 
@@ -129,9 +129,12 @@ export const updateUser = async (
 
     await prisma.user.update({
       where: {
-        username,
+        username: usernameParams,
       },
-      data,
+      data: {
+        username: body.username,
+        email: body.username,
+      },
     });
 
     return;
