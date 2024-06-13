@@ -22,7 +22,7 @@ const Projects = async () => {
   const data = await getProjects();
 
   return (
-    <section className="my-6">
+    <section className="w-full my-6">
       <h1 className="scroll-m-20 pb-6 text-3xl font-semibold tracking-tight first:mt-0">
         Projects
       </h1>

@@ -60,7 +60,7 @@ const postProjectData = async (
     });
 
     if (res.ok) {
-      toast("Project uploaded ✅");
+      toast("Project uploaded ✅", { position: "top-right" });
       return await res.json();
     } else {
       toast("Something went wrong ❌", {
@@ -68,6 +68,7 @@ const postProjectData = async (
         style: {
           color: "red",
         },
+        position: "top-right",
       });
       console.error("Failed to upload project data");
     }
@@ -77,6 +78,7 @@ const postProjectData = async (
       style: {
         color: "red",
       },
+      position: "top-right",
     });
     console.error("Error posting project data", error);
   }

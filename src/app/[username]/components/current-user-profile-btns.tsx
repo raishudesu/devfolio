@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Ellipsis } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const CurrentProfileBtns = () => {
@@ -20,9 +19,6 @@ const CurrentProfileBtns = () => {
         onClick={() => router.push("/settings/profile")}
       >
         Edit profile
-      </Button>
-      <Button variant={"secondary"} className="p-6 rounded-full">
-        <Ellipsis size={20} />
       </Button>
     </>
   );
