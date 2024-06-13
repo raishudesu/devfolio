@@ -17,7 +17,7 @@ const CurrentProfileBtns = () => {
       <Button
         className="p-6 rounded-full"
         variant={"secondary"}
-        onClick={() => router.push("/account/profile")}
+        onClick={() => router.push("/settings/profile")}
       >
         Edit profile
       </Button>

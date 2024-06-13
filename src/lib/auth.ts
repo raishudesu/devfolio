@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ user, token }) => {
+    jwt: async ({ user, token, trigger, session }) => {
       if (user) {
         return {
           ...token,
@@ -51,6 +51,11 @@ export const authOptions: NextAuthOptions = {
           imageLink: user.imageLink,
         };
       }
+
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      }
+
       return token;
     },
     session: async ({ session, token }) => {
