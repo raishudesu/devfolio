@@ -55,11 +55,21 @@ const Profile = async ({ username }: { username: string }) => {
               </div>
             ) : (
               <div className="flex gap-4">
-                <Button size={"lg"}>Get in touch</Button>
-                <Button size={"lg"} variant={"secondary"}>
+                <Button className="p-6 rounded-full" size={"lg"}>
+                  Get in touch
+                </Button>
+                <Button
+                  className="p-6 rounded-full"
+                  size={"lg"}
+                  variant={"secondary"}
+                >
                   Follow
                 </Button>
-                <Button size={"lg"} variant={"secondary"}>
+                <Button
+                  className="p-6 rounded-full"
+                  size={"lg"}
+                  variant={"secondary"}
+                >
                   ...
                 </Button>
               </div>
