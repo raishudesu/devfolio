@@ -35,7 +35,7 @@ const saveGeneralChanges = async (
     const data = await res.json();
 
     if (data.ok) {
-      toast("Your account has been updated ✅");
+      toast("Your account has been updated ✅", { position: "top-right" });
       return data;
     } else {
       toast("Something went wrong ❌", {
@@ -43,6 +43,7 @@ const saveGeneralChanges = async (
         style: {
           color: "red",
         },
+        position: "top-right",
       });
     }
   } catch (error: any) {
@@ -51,6 +52,7 @@ const saveGeneralChanges = async (
       style: {
         color: "red",
       },
+      position: "top-right",
     });
     console.error(error);
   }

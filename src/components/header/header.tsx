@@ -8,7 +8,7 @@ import NavMenu from "./nav-menu";
 import UserMenu from "./user-menu";
 import Image from "next/image";
 import logo from "../../assets/logo.svg";
-import { Pacifico, Rubik } from "next/font/google";
+import { Pacifico } from "next/font/google";
 import Link from "next/link";
 import { Input } from "../ui/input";
 
@@ -35,13 +35,13 @@ const Header = async () => {
           </div>
         </div>
 
-        <div className="hidden md:flex gap-2 items-center">
-          <div>
+        <div className=" flex gap-2 items-center">
+          <div className="hidden md:flex">
             <Input className="p-6 rounded-full" placeholder="🔎 Search..." />
           </div>
           {session ? null : <SignInButtons />}
           <UserMenu />
-          <div>
+          <div className="hidden md:flex">
             <ModeToggle />
           </div>
         </div>
