@@ -35,20 +35,23 @@ const saveGeneralChanges = async (
       },
       body: JSON.stringify(values),
     });
-    if (res.ok) {
+
+    const data = await res.json();
+
+    if (data.ok) {
       toast("Your account has been updated ✅");
-      return await res.json();
+      return data;
     } else {
       toast("Something went wrong ❌", {
-        description: "Project upload failed.",
+        description: data.error.errorMessage,
         style: {
           color: "red",
         },
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     toast("Something went wrong ❌", {
-      description: "Project upload failed.",
+      description: error.errorMessage,
       style: {
         color: "red",
       },
@@ -84,6 +87,7 @@ const GeneralForm = () => {
           ...session,
           user: {
             username: values.username,
+            email: values.email,
           },
         });
       }

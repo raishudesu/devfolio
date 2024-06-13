@@ -41,8 +41,9 @@ export async function GET(req: Request, { params }: { params: Params }) {
 export async function PATCH(req: Request, { params }: { params: Params }) {
   try {
     const { username } = params;
-    const body = await req.json();
 
+    const body = await req.json();
+    console.log(body);
     await updateUser(username, body);
 
     return NextResponse.json(

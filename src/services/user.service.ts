@@ -107,16 +107,25 @@ export const getUserByUsername = async (username: string) => {
       );
 
     const { password: userPassword, ...userDetails } = user!;
-
     return userDetails;
   } catch (error) {
     throw error;
   }
 };
 
-export const updateUser = async (username: string, data: object | User) => {
+export const updateUser = async (
+  username: string,
+  data: { username: string; email: string }
+) => {
   try {
-    await getUserByUsername(username);
+    const isUsernameExists = await prisma.user.findUnique({
+      where: {
+        username: data.username,
+      },
+    });
+
+    if (isUsernameExists)
+      throw new ExistingUserByUsername(false, "Username is already taken", 500);
 
     await prisma.user.update({
       where: {
@@ -124,6 +133,7 @@ export const updateUser = async (username: string, data: object | User) => {
       },
       data,
     });
+
     return;
   } catch (error) {
     throw error;

@@ -38,7 +38,7 @@ const UserMenu = async () => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild className="cursor-pointer p-3">
-            <Link href={`/settings/profile`} className="w-full">
+            <Link href={`/settings`} className="w-full">
               Settings
             </Link>
           </DropdownMenuItem>
