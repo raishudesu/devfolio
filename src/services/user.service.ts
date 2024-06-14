@@ -113,6 +113,26 @@ export const getUserByUsername = async (username: string) => {
   }
 };
 
+export const updateProfileImage = async (
+  usernameParams: string,
+  body: { imageLink: string }
+) => {
+  try {
+    await prisma.user.update({
+      where: {
+        username: usernameParams,
+      },
+      data: {
+        imageLink: body.imageLink,
+      },
+    });
+
+    return;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateUser = async (
   usernameParams: string,
   body: { username: string; email: string }

@@ -23,7 +23,10 @@ const UserMenu = async () => {
       <DropdownMenuTrigger asChild>
         <Button variant={"outline"} className="p-0 rounded-full">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+            <AvatarImage
+              src={session?.user?.imageLink as string}
+              alt="user-avatar"
+            />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </Button>
