@@ -6,15 +6,17 @@ import { Bookmark, Heart } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const getProject = async (projectId: string): Promise<ProjectResponse> => {
-  const data = await fetch(`http://localhost:3000/api/project/${projectId}`);
+  const data = await fetch(`http://localhost:3000/api/project/${projectId}`, {
+    cache: "no-store",
+  });
   return await data.json();
 };
 
 const ProjectDetails = async ({ projectId }: { projectId: string }) => {
   const data = await getProject(projectId);
-
   const { project } = data;
 
   return (
@@ -24,8 +26,13 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
           {project.projectName}
         </h1>
         <div className="z-10 sticky top-0 flex gap-2 py-3 bg-primary-foreground">
-          <div className="w-12 h-12 rounded-full bg-slate-400"></div>
-
+          <Avatar>
+            <AvatarImage
+              src={project.user.imageLink}
+              alt={`${project.user.username}-profile-image`}
+            />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
           <div className="w-full flex justify-between items-center">
             <div className="flex flex-col gap-2">
               <Link

@@ -10,7 +10,6 @@ export async function GET(req: Request, { params }: { params: Params }) {
     const { id } = params;
 
     const project = await getProject(id);
-
     return NextResponse.json(
       {
         ok: true,

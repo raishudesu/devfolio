@@ -1,4 +1,5 @@
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import type { ProjectCard } from "@/types/types";
 import { Eye, Heart } from "lucide-react";
@@ -15,12 +16,19 @@ const ProjectCard = ({ projectId, user, url }: ProjectCard) => {
             alt={url}
             fill
             className="rounded-md object-cover border"
+            priority
           />
         </AspectRatio>
       </Link>
       <div className="flex justify-between items-center gap-2">
         <div className="flex gap-2 items-center">
-          <div className="w-6 h-6 rounded-full bg-slate-400"></div>
+          <Avatar>
+            <AvatarImage
+              src={user?.imageLink}
+              alt={`${user?.username}-profile-image`}
+            />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
           <small>
             {user.firstName} {user.lastName}
           </small>

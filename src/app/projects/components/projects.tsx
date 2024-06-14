@@ -50,7 +50,7 @@ const Projects = async () => {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.projects?.map(({ id, user, projectName, images }) => (
           <div key={id}>
             {images ? (

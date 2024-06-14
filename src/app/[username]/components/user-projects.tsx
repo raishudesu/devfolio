@@ -1,13 +1,15 @@
 import ProjectCard from "@/app/projects/components/project-card";
 import { ProjectsResponse } from "@/types/types";
-import Image from "next/image";
 import AddProjectCard from "./add-project-card";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
 const getUserProjects = async (username: string): Promise<ProjectsResponse> => {
   const res = await fetch(
-    `http://localhost:3000/api/user/${username}/projects`
+    `http://localhost:3000/api/user/${username}/projects`,
+    {
+      cache: "no-store",
+    }
   );
   return await res.json();
 };

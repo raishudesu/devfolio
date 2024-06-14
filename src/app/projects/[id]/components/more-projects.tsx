@@ -3,7 +3,10 @@ import ProjectCard from "../../components/project-card";
 
 const getMoreProjects = async (username: string): Promise<ProjectsResponse> => {
   const data = await fetch(
-    `http://localhost:3000/api/user/${username}/projects`
+    `http://localhost:3000/api/user/${username}/projects`,
+    {
+      cache: "no-store",
+    }
   );
 
   return await data.json();
