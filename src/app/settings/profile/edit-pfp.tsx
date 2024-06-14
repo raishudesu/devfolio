@@ -76,7 +76,9 @@ const EditPfp = () => {
               imageLink: publicUrl,
             },
           });
-          toast("Profile picture updated successfully 🎉");
+          toast("Profile picture updated successfully 🎉", {
+            position: "top-right",
+          });
           router.refresh();
         }
         console.log(data);

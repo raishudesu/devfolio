@@ -39,7 +39,7 @@ const saveGeneralChanges = async (
       return data;
     } else {
       toast("Something went wrong ❌", {
-        description: data.error.errorMessage,
+        description: data.error,
         style: {
           color: "red",
         },
@@ -48,7 +48,7 @@ const saveGeneralChanges = async (
     }
   } catch (error: any) {
     toast("Something went wrong ❌", {
-      description: error.errorMessage,
+      description: error.errorMessage || "An expected error occurred.",
       style: {
         color: "red",
       },

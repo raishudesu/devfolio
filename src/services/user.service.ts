@@ -5,7 +5,7 @@ import {
   ExistingUserByUsername,
   UserNotFoundError,
 } from "@/utils/errors";
-import type { User } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { compare } from "bcrypt";
 import { z } from "zod";
 
@@ -138,27 +138,28 @@ export const updateUser = async (
   body: { username: string; email: string }
 ) => {
   try {
-    const isUsernameExists = await prisma.user.findUnique({
-      where: {
-        username: body.username,
-      },
-    });
-
-    if (isUsernameExists)
-      throw new ExistingUserByUsername(false, "Username is already taken", 500);
-
     await prisma.user.update({
-      where: {
-        username: usernameParams,
-      },
+      where: { username: usernameParams },
       data: {
         username: body.username,
-        email: body.username,
+        email: body.email,
       },
     });
 
     return;
   } catch (error) {
+    if (
+      error instanceof PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      const target = error.meta?.target as string;
+      if (target.includes("username")) {
+        throw new Error("Username is already taken");
+      }
+      if (target.includes("email")) {
+        throw new Error("Email is already taken");
+      }
+    }
     throw error;
   }
 };

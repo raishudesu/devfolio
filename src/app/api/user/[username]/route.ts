@@ -3,7 +3,11 @@ import {
   getUserByUsername,
   updateUser,
 } from "@/services/user.service";
-import { UserNotFoundError } from "@/utils/errors";
+import {
+  ExistingUserByEmailError,
+  ExistingUserByUsername,
+  UserNotFoundError,
+} from "@/utils/errors";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
@@ -43,7 +47,7 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
     const { username } = params;
 
     const body = await req.json();
-    console.log(body);
+
     await updateUser(username, body);
 
     return NextResponse.json(
@@ -55,23 +59,11 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
         status: 200,
       }
     );
-  } catch (error) {
-    if (error instanceof UserNotFoundError) {
-      return NextResponse.json(
-        {
-          ok: error.ok,
-          errorMessage: error.errorMessage,
-        },
-        {
-          status: error.code,
-        }
-      );
-    }
-
+  } catch (error: any) {
     return NextResponse.json(
       {
         ok: false,
-        error,
+        error: error.message || "An unexpected error occurred",
       },
       {
         status: 500,
