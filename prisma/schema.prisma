@@ -45,6 +45,8 @@ model User {
   lastName            String
   username            String               @unique
   imageLink           String?
+  bio                 String?
+  websiteLink         String?
   active              Boolean              @default(true)
   projects            Project[]
   geminiConversations GeminiConversation[]
