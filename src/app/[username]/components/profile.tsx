@@ -9,9 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const getUserProfile = async (username: string): Promise<UserResponse> => {
   const res = await fetch(`http://localhost:3000/api/user/${username}`, {
     method: "GET",
-    next: {
-      revalidate: 5000,
-    },
+    cache: "no-store",
   });
 
   return await res.json();

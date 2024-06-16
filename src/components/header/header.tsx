@@ -24,11 +24,14 @@ const Header = async () => {
             <MobileSheet />
           </div>
           <div className="flex gap-1 items-center">
-            <Link href={"/"} className={`text-2xl ${pacifico.className}`}>
-              Devfolio
+            <Image src={logo} alt="devfolio logo" width={28} height={28} />
+            <Link
+              href={"/"}
+              className={`text-md font-extrabold leading-none"s`}
+            >
+              Dev
+              <span className="text-primary">folio</span>
             </Link>
-
-            <Image src={logo} alt="devfolio logo" width={30} height={30} />
           </div>
           <div className="hidden md:block">
             <NavMenu className="flex gap-2" />
