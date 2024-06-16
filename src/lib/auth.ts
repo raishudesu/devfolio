@@ -49,6 +49,7 @@ export const authOptions: NextAuthOptions = {
           firstName: user.firstName,
           lastName: user.lastName,
           imageLink: user.imageLink,
+          bio: user.bio,
         };
       }
 
@@ -68,6 +69,7 @@ export const authOptions: NextAuthOptions = {
           username: token.username,
           id: token.id,
           imageLink: token.imageLink,
+          bio: token.bio,
         },
       };
     },

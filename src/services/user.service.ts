@@ -1,5 +1,5 @@
 import prisma from "@/lib/db";
-import { userServerSchema } from "@/lib/zod";
+import { editDetailsSchema, userServerSchema } from "@/lib/zod";
 import {
   ExistingUserByEmailError,
   ExistingUserByUsername,
@@ -128,6 +128,22 @@ export const updateProfileImage = async (
     });
 
     return;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUserDetails = async (
+  usernameParams: string,
+  data: z.infer<typeof editDetailsSchema>
+) => {
+  try {
+    await prisma.user.update({
+      where: {
+        username: usernameParams,
+      },
+      data,
+    });
   } catch (error) {
     throw error;
   }

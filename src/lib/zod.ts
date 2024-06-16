@@ -116,3 +116,19 @@ export const generalFormSchema = z.object({
   username: z.string({ required_error: "Username is required" }),
   email: z.string({ required_error: "Email is required" }).email(),
 });
+
+export const editDetailsSchema = z.object({
+  firstName: z
+    .string()
+    .min(2, "First name should be at least 2 characters")
+    .max(255)
+    .trim()
+    .optional(),
+  lastName: z
+    .string()
+    .min(2, "Last name should be at least 2 characters")
+    .max(255)
+    .trim()
+    .optional(),
+  bio: z.string().max(255).trim().optional(),
+});
