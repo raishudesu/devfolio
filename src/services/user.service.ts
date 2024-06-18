@@ -3,10 +3,11 @@ import { editDetailsSchema, userServerSchema } from "@/lib/zod";
 import {
   ExistingUserByEmailError,
   ExistingUserByUsername,
+  IncorrectOldPasswordError,
   UserNotFoundError,
 } from "@/utils/errors";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { compare } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { z } from "zod";
 
 export const existingUserByEmail = async (email: string) => {
@@ -128,6 +129,49 @@ export const updateProfileImage = async (
     });
 
     return;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updatePassword = async (
+  usernameParams: string,
+  oldPassword: string,
+  newPassword: string
+) => {
+  try {
+    const currentUser = await prisma.user.findUnique({
+      where: {
+        username: usernameParams,
+      },
+    });
+    if (currentUser) {
+      const isOldPasswordMatched = await compare(
+        oldPassword,
+        currentUser?.password
+      );
+
+      if (isOldPasswordMatched) {
+        const hashedPwd = await hash(newPassword, 10);
+
+        await prisma.user.update({
+          where: {
+            username: usernameParams,
+          },
+          data: {
+            password: hashedPwd,
+          },
+        });
+      } else {
+        throw new IncorrectOldPasswordError(
+          false,
+          "Incorrect old password",
+          403
+        );
+      }
+    } else {
+      throw new UserNotFoundError(false, "User does not exist", 404);
+    }
   } catch (error) {
     throw error;
   }

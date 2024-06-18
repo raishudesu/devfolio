@@ -73,6 +73,16 @@ export const updateProjectSchema = z
   })
   .strict();
 
+export const changePasswordSchema = z
+  .object({
+    oldPassword: z
+      .string({ required_error: "Old password is required" })
+      .min(6, "Old Password must be at least 6 characters"),
+    newPassword: z
+      .string({ required_error: "New password is required" })
+      .min(6, "New password must be at least 6 characters"),
+  })
+  .strict();
 export const uploadImagesSchema = z.array(
   z
     .object({

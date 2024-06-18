@@ -20,6 +20,17 @@ export class ProjectNotFoundError extends Error {
   }
 }
 
+export class IncorrectOldPasswordError extends Error {
+  constructor(
+    public ok: boolean,
+    public errorMessage: string,
+    public code: number
+  ) {
+    super(errorMessage);
+    this.name = "IncorrectOldPasswordError";
+  }
+}
+
 export class ExistingUserByEmailError extends Error {
   constructor(
     public ok: boolean,
