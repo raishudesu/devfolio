@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,6 +26,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
+import InputTags from "./input-tags";
 
 async function uploadImage(userId: string, image: string) {
   const { data, error } = await supabase.storage
@@ -102,6 +104,7 @@ const UploadForm = () => {
     defaultValues: {
       projectName: "",
       description: "",
+      tags: [],
       images: [],
     },
   });
@@ -208,6 +211,22 @@ const UploadForm = () => {
                     disabled={formState.isSubmitting}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="tags"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Add Tags</FormLabel>
+                <FormControl>
+                  <InputTags {...field} />
+                </FormControl>
+                <FormDescription>
+                  Tags can be used for your project to be easily searched.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}

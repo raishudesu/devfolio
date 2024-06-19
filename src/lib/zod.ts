@@ -105,6 +105,7 @@ export const uploadProjectSchema = z.object({
     .trim()
     .min(2, "Project name must be at least 2 characters")
     .max(55, "Project name must not exceed 55 characters"),
+  tags: z.array(z.string()).nonempty("At least one tag is required"),
   description: z
     .string({ required_error: "Project description is required" })
     .trim()
