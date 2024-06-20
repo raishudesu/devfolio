@@ -7,8 +7,18 @@ const SignInButtons = () => {
 
   return (
     <div className="flex gap-2">
-      <Button onClick={() => router.push("/sign-in")}>Sign in</Button>
-      <Button onClick={() => router.push("/register")}>Register</Button>
+      <Button
+        className="p-4 rounded-full"
+        onClick={() => router.push("/sign-in")}
+      >
+        Sign in
+      </Button>
+      <Button
+        className="p-4 rounded-full"
+        onClick={() => router.push("/register")}
+      >
+        Register
+      </Button>
     </div>
   );
 };

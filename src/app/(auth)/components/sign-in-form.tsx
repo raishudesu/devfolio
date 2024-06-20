@@ -107,7 +107,7 @@ const SignInForm = () => {
           />
         </div>
         <Button
-          className="self-stretch mt-6"
+          className="self-stretch mt-6 p-6 rounded-full"
           type="submit"
           disabled={formState.isSubmitting}
         >

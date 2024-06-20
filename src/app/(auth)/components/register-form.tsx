@@ -281,7 +281,11 @@ const RegisterForm = () => {
               animate={{ x: 0, opacity: 1 }}
               transition={{ type: "spring", stiffness: 100 }}
             >
-              <Button className="w-full mt-4" type="button" onClick={nextStep}>
+              <Button
+                className="w-full mt-4 py-6 rounded-full"
+                type="button"
+                onClick={nextStep}
+              >
                 Next
               </Button>
             </motion.div>
@@ -293,7 +297,7 @@ const RegisterForm = () => {
               transition={{ type: "spring", stiffness: 100 }}
             >
               <Button
-                className="mt-4 w-full"
+                className="mt-4 w-full py-6 rounded-full"
                 type="submit"
                 disabled={formState.isSubmitting}
               >
@@ -308,8 +312,12 @@ const RegisterForm = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ type: "spring", stiffness: 100 }}
           >
-            <Button className="w-full" variant={"secondary"} onClick={prevStep}>
-              {"<"} Back
+            <Button
+              className="w-full p-6 rounded-full"
+              variant={"secondary"}
+              onClick={prevStep}
+            >
+              Back
             </Button>
           </motion.div>
         )}
