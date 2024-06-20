@@ -29,12 +29,13 @@ const UserProjects = async ({ username }: { username: string }) => {
         </h2>
         <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.length > 0 ? (
-            projects?.map(({ id, projectName, images, user }) => (
+            projects?.map(({ id, projectName, images, user, tags }) => (
               <ProjectCard
                 projectId={id}
                 projectName={projectName}
                 user={user}
                 url={images[0].url}
+                tags={tags}
                 key={id}
               />
             ))

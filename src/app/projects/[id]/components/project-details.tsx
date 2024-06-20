@@ -25,31 +25,36 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
         <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
           {project.projectName}
         </h1>
-        <div className="z-10 sticky top-0 flex gap-2 py-3 bg-primary-foreground">
-          <Avatar>
-            <AvatarImage
-              src={project.user.imageLink}
-              alt={`${project.user.username}-profile-image`}
-            />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="w-full flex justify-between items-center">
-            <div className="flex flex-col gap-2">
-              <Link
-                href={`/${project.user.username}`}
-                className="hover:underline"
-              >
-                <p>
-                  {project.user.firstName} {project.user.lastName}
-                </p>
-              </Link>
-              <div className="flex gap-2 items-center">
-                <div className="w-2 h-2 bg-green-400 animate-pulse rounded-full"></div>
-                <small>Available for work 🚀 </small>
+        <div className="z-10 sticky top-0 flex items-center gap-2 py-3 bg-primary-foreground">
+          <div className="flex flex-col w-full md:flex-row justify-between gap-4">
+            <div className="flex gap-2">
+              <Avatar>
+                <AvatarImage
+                  src={project.user.imageLink}
+                  alt={`${project.user.username}-profile-image`}
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="w-full flex justify-between items-center">
+                <div className="flex flex-col">
+                  <Link
+                    href={`/${project.user.username}`}
+                    className="hover:underline"
+                  >
+                    <p>
+                      {project.user.firstName} {project.user.lastName}
+                    </p>
+                  </Link>
+                  <div className="flex gap-2 items-center">
+                    <div className="w-2 h-2 bg-green-400 animate-pulse rounded-full"></div>
+                    <small>Available for work 🚀 </small>
+                  </div>
+                </div>
               </div>
             </div>
+
             <div className="flex gap-2">
-              <Button className="p-6 rounded-full">Contact</Button>
+              <Button className="p-6 rounded-full">View profile</Button>
               <Button className="p-6 rounded-full" variant={"secondary"}>
                 <Heart size={20} />
               </Button>
@@ -59,6 +64,7 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
             </div>
           </div>
         </div>
+
         <div className="mt-2 flex gap-2">
           {project.tags.map((tag, index) => (
             <Badge variant={"secondary"} key={index}>

@@ -27,12 +27,13 @@ const MoreProjects = async ({
 
   return (
     <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {moreProjects?.map(({ id, projectName, images, user }) => (
+      {moreProjects?.map(({ id, projectName, images, user, tags }) => (
         <ProjectCard
           projectId={id}
           projectName={projectName}
           user={user}
           url={images[0].url}
+          tags={tags}
           key={id}
         />
       ))}
