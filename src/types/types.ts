@@ -12,6 +12,7 @@ export type ProjectCard = {
   projectName: string;
   user: IncludeUser;
   url: string;
+  tags: string[];
 };
 
 export type ProjectType = Project & {

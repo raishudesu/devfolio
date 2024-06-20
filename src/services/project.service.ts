@@ -5,13 +5,13 @@ import type { Project } from "@prisma/client";
 import { z } from "zod";
 
 export const createProject = async (data: z.infer<typeof projectSchema>) => {
-  console.log(data);
   try {
     const project = await prisma.project.create({
       data: {
         userId: data.userId,
         projectName: data.projectName,
         description: data.description,
+        tags: data.tags,
       },
     });
 
@@ -19,8 +19,6 @@ export const createProject = async (data: z.infer<typeof projectSchema>) => {
       projectId: project.id,
       url: imageUrl,
     }));
-
-    console.log(imagesData);
 
     // Step 3: Insert the images
     await prisma.image.createMany({

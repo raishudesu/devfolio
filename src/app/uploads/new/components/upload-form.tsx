@@ -58,9 +58,9 @@ const postProjectData = async (
         projectName: values.projectName,
         description: values.description,
         images: publicUrls,
+        tags: values.tags,
       }),
     });
-
     if (res.ok) {
       toast("Project uploaded ✅", { position: "top-right" });
       return await res.json();
@@ -137,6 +137,8 @@ const UploadForm = () => {
             publicUrls,
             user
           )) as ProjectResponse;
+
+          console.log(data);
 
           data?.ok ? router.push(`/projects/${data.project.id}`) : null;
         } else {

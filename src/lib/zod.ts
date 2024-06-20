@@ -63,6 +63,7 @@ export const projectSchema = z
     projectName: z.string({ required_error: "Project name is required" }),
     description: z.string({ required_error: "Description is required" }),
     images: z.array(z.string()),
+    tags: z.array(z.string()),
   })
   .strict();
 

@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 const getProject = async (projectId: string): Promise<ProjectResponse> => {
   const data = await fetch(`http://localhost:3000/api/project/${projectId}`, {
@@ -18,7 +19,6 @@ const getProject = async (projectId: string): Promise<ProjectResponse> => {
 const ProjectDetails = async ({ projectId }: { projectId: string }) => {
   const data = await getProject(projectId);
   const { project } = data;
-
   return (
     <section className="my-6 w-full max-w-screen-xl">
       <div className="w-full">
@@ -58,6 +58,13 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
               </Button>
             </div>
           </div>
+        </div>
+        <div className="mt-2 flex gap-2">
+          {project.tags.map((tag, index) => (
+            <Badge variant={"secondary"} key={index}>
+              {tag}
+            </Badge>
+          ))}
         </div>
         <div className="py-6 grid gap-6">
           {project.images.map(({ id, url }) => (

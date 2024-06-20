@@ -51,7 +51,7 @@ const Projects = async () => {
         </DropdownMenu>
       </div>
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.projects?.map(({ id, user, projectName, images }) => (
+        {data?.projects?.map(({ id, user, projectName, images, tags }) => (
           <div key={id}>
             {images ? (
               <ProjectCard
@@ -59,6 +59,7 @@ const Projects = async () => {
                 projectName={projectName}
                 url={images[0].url}
                 user={user}
+                tags={tags}
                 key={id}
               />
             ) : null}
