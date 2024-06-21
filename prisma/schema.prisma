@@ -33,7 +33,7 @@ model Image {
   projectId String
   url       String
   createdAt DateTime @default(now())
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model User {

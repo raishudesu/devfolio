@@ -1,6 +1,10 @@
 import prisma from "@/lib/db";
 import { updateProjectSchema } from "@/lib/zod";
-import { getProject, updateProject } from "@/services/project.service";
+import {
+  deleteProject,
+  getProject,
+  updateProject,
+} from "@/services/project.service";
 import { ProjectNotFoundError } from "@/utils/errors";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
@@ -92,26 +96,7 @@ export async function DELETE(req: Request, { params }: { params: Params }) {
   try {
     const { id } = params;
 
-    const projectExists = await prisma.project.findUnique({
-      where: {
-        id,
-      },
-    });
-    if (!projectExists) {
-      return NextResponse.json(
-        {
-          ok: false,
-          message: `Project with ID:${id} does not exist.`,
-        },
-        { status: 404 }
-      );
-    }
-
-    await prisma.project.delete({
-      where: {
-        id,
-      },
-    });
+    await deleteProject(id);
 
     return NextResponse.json(
       {
