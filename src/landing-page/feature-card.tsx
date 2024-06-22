@@ -7,21 +7,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import React from "react";
+import { textAnimation } from "./hero";
+import { ExternalLink } from "lucide-react";
 
 type FeatureCard = {
   title: string;
-  image: string;
   desc: string;
 };
 
-const FeatureCard = ({ title, image, desc }: FeatureCard) => {
+const FeatureCard = ({ title, desc }: FeatureCard) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className={`${textAnimation} font-bold`}>{title}</CardTitle>
         <CardDescription>{desc}</CardDescription>
       </CardHeader>
-      <CardContent></CardContent>
+
+      <CardFooter>
+        <ExternalLink size={20} className="text-muted-foreground" />
+      </CardFooter>
     </Card>
   );
 };

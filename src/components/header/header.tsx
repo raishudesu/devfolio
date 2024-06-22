@@ -6,13 +6,9 @@ import { authOptions } from "@/lib/auth";
 import SignInButtons from "./sign-in-buttons";
 import NavMenu from "./nav-menu";
 import UserMenu from "./user-menu";
-import Image from "next/image";
-import logo from "../../assets/logo.svg";
-import { Pacifico } from "next/font/google";
 import Link from "next/link";
 import { Input } from "../ui/input";
-
-const pacifico = Pacifico({ weight: "400", subsets: ["latin"] });
+import { textAnimation } from "@/landing-page/hero";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
@@ -24,13 +20,11 @@ const Header = async () => {
             <MobileSheet />
           </div>
           <div className="flex gap-1 items-center">
-            <Image src={logo} alt="devfolio logo" width={28} height={28} />
             <Link
               href={"/"}
-              className={`text-md font-extrabold leading-none"s`}
+              className={`text-lg leading-none font-bold ${textAnimation}`}
             >
-              Dev
-              <span className="text-primary">folio</span>
+              ✨devfolio
             </Link>
           </div>
           <div className="hidden md:block">
