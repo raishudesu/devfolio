@@ -3,6 +3,7 @@ import { ProjectsResponse } from "@/types/types";
 import AddProjectCard from "./add-project-card";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { textAnimation } from "@/components/landing-page/hero";
 
 const getUserProjects = async (username: string): Promise<ProjectsResponse> => {
   const res = await fetch(
@@ -24,7 +25,9 @@ const UserProjects = async ({ username }: { username: string }) => {
   return (
     <section className="w-full max-w-screen-xl">
       <div className=" p-4">
-        <h2 className="scroll-m-20 pb-2 text-2xl font-semibold tracking-tight first:mt-0">
+        <h2
+          className={`scroll-m-20 pb-4 text-2xl font-semibold tracking-tight first:mt-0 ${textAnimation}`}
+        >
           Featured Projects
         </h2>
         <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">

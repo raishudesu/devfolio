@@ -27,6 +27,7 @@ import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import InputTags from "./input-tags";
+import { textAnimation } from "@/components/landing-page/hero";
 
 async function uploadImage(userId: string, image: string) {
   const { data, error } = await supabase.storage
@@ -270,7 +271,9 @@ const UploadForm = () => {
       {images.length > 0 && (
         <div>
           <div className="flex justify-between items-center">
-            <h3 className="py-4 scroll-m-20 text-2xl font-semibold tracking-tight">
+            <h3
+              className={`py-4 scroll-m-20 text-2xl font-semibold tracking-tight ${textAnimation}`}
+            >
               Selected Images:
             </h3>
             <Button variant={"ghost"} onClick={handleClearImages}>

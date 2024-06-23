@@ -1,5 +1,6 @@
 "use client";
 
+import { textAnimation } from "@/components/landing-page/hero";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -23,7 +24,9 @@ const Links = () => {
   const pathname = usePathname();
   return (
     <aside className="w-full max-w-60 flex flex-col gap-3">
-      <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+      <h2
+        className={`scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0 ${textAnimation}`}
+      >
         Settings
       </h2>
       <div className="w-full justify-between flex md:flex-col gap-3">

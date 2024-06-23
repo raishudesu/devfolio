@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkle, Sparkles, SquareUserRound } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Content } from "@google/generative-ai";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import StartingDisplay from "./starting-display";
@@ -14,6 +14,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { z } from "zod";
 import { geminiConversationSchema } from "@/lib/zod";
 import type { GeminiConversation } from "@prisma/client";
+import { textAnimation } from "@/components/landing-page/hero";
 
 type TChat = {
   conversationId?: string;
@@ -198,9 +199,10 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
                 >
                   <div>
                     {message.role === "user" ? (
-                      <SquareUserRound size={20} color="#6C63FF" />
+                      // <SquareUserRound size={20} color="#6C63FF" />
+                      <div className={`${textAnimation}`}>👨</div>
                     ) : (
-                      <Sparkles size={20} color="#6C63FF" />
+                      <div className={`${textAnimation} text-lg`}>✨</div>
                     )}
                   </div>
                   <div className="w-full pr-2">
@@ -210,7 +212,8 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
               ))}
               {loading ? (
                 <div className="px-6">
-                  <Sparkle size={20} className="animate-spin" color="#6C63FF" />
+                  {/* <Sparkle size={20} className="animate-spin" color="#6C63FF" /> */}
+                  <div className={`${textAnimation} text-lg`}>✨</div>
                 </div>
               ) : null}
             </div>
@@ -226,11 +229,12 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
               disabled={loading}
             />
             <Button
+              variant={"outline"}
               type="submit"
               className="p-6 rounded-full"
               disabled={loading}
             >
-              <Sparkles size={20} />
+              <div className={`${textAnimation} font-bold text-lg`}>✨</div>
             </Button>
           </form>
         </div>

@@ -10,6 +10,7 @@ import ProjectCard from "./project-card";
 import { ProjectsResponse } from "@/types/types";
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
+import { textAnimation } from "@/components/landing-page/hero";
 
 const getProjects = async (): Promise<ProjectsResponse> => {
   const data = await fetch("http://localhost:3000/api/project", {
@@ -23,10 +24,12 @@ const Projects = async () => {
 
   return (
     <section className="w-full my-6">
-      <h1 className="scroll-m-20 pb-6 text-3xl font-semibold tracking-tight first:mt-0">
-        Projects
-      </h1>
-      <div className="pb-6">
+      <div className="pb-6 flex items-center justify-between">
+        <h1
+          className={`scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 ${textAnimation}`}
+        >
+          Projects
+        </h1>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="flex gap-2">

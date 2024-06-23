@@ -1,3 +1,4 @@
+import { textAnimation } from "@/components/landing-page/hero";
 import { authOptions } from "@/lib/auth";
 import { SquarePen } from "lucide-react";
 import { getServerSession } from "next-auth";
@@ -22,15 +23,17 @@ const ConversationList = async () => {
   return (
     <aside className="h-full max-h-[75vh] w-full md:max-w-60 no-scrollbar overflow-hidden overflow-y-scroll">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
-        <h2 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+        <h2
+          className={`scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0 ${textAnimation}`}
+        >
           History
         </h2>
         <Link
           href={"/generate/new"}
           type="button"
-          className="p-3 bg-primary rounded-full"
+          className="p-3 rounded-lg text-sm bg-secondary"
         >
-          <SquarePen size={20} />
+          <SquarePen size={18} />
         </Link>
       </div>
 
