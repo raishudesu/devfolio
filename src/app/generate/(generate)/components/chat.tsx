@@ -232,7 +232,7 @@ const Chat = ({ conversationId, contentHistory }: TChat) => {
               variant={"outline"}
               type="submit"
               className="p-6 rounded-full"
-              disabled={loading}
+              disabled={loading || prompt === ""}
             >
               <div className={`${textAnimation} font-bold text-lg`}>✨</div>
             </Button>
