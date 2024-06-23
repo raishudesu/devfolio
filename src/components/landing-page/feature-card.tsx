@@ -9,13 +9,15 @@ import {
 import React from "react";
 import { textAnimation } from "./hero";
 import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 type FeatureCard = {
   title: string;
   desc: string;
+  link: string;
 };
 
-const FeatureCard = ({ title, desc }: FeatureCard) => {
+const FeatureCard = ({ title, desc, link }: FeatureCard) => {
   return (
     <Card>
       <CardHeader>
@@ -24,7 +26,9 @@ const FeatureCard = ({ title, desc }: FeatureCard) => {
       </CardHeader>
 
       <CardFooter>
-        <ExternalLink size={20} className="text-muted-foreground" />
+        <Link href={link}>
+          <ExternalLink size={20} className="text-muted-foreground" />
+        </Link>
       </CardFooter>
     </Card>
   );

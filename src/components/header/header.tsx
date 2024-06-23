@@ -8,7 +8,7 @@ import NavMenu from "./nav-menu";
 import UserMenu from "./user-menu";
 import Link from "next/link";
 import { Input } from "../ui/input";
-import { textAnimation } from "@/landing-page/hero";
+import { textAnimation } from "@/components/landing-page/hero";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);

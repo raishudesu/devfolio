@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/session-provider";
 import TanstackProvider from "@/providers/tanstack-provider";
 import { GeistSans } from "geist/font/sans";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Devfolio",
@@ -32,6 +33,7 @@ export default function RootLayout({
               <main className="flex flex-col justify-center items-center">
                 {children}
               </main>
+              <Footer />
               <Toaster />
             </AuthProvider>
           </ThemeProvider>

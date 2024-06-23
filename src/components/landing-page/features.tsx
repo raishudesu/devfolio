@@ -6,18 +6,22 @@ const featureList = [
   {
     title: "Generative AI Integration ✨",
     desc: "Devfolio uses Google's Gemini API to assist aspiring developers to ideate their next project.",
+    link: "/generate/new"
   },
   {
     title: "Project Showcase 🏢",
     desc: "Present your projects in detail, including clear descriptions, screenshots, and links to live demos.",
+    link: "/projects"
   },
   {
     title: "Connect with Developers ⚡",
     desc: "Discover other developers' projects, find inspiration, and create connections.",
+    link: "/top-developers"
   },
   {
     title: "Your Portfolio 📖",
     desc: "Devfolio helps you stand out from the crowd with dedicated features to showcase your talent to the right recruiters.",
+    link: "/profile"
   },
 ];
 
@@ -36,8 +40,8 @@ const Features = () => {
         development inspiration to increase their employment probability.
       </p>
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {featureList.map(({ title, desc }, index) => (
-          <FeatureCard title={title} desc={desc} key={index} />
+        {featureList.map(({ title, desc, link }, index) => (
+          <FeatureCard title={title} desc={desc} link={link} key={index} />
         ))}
       </div>
     </>

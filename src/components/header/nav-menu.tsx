@@ -5,24 +5,9 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-
-const navLinks: { title: string; href: string }[] = [
-  {
-    title: "Projects 📝",
-    href: "/projects",
-  },
-  {
-    title: "Top Developers 👨‍💻",
-    href: "/top-developers",
-  },
-  {
-    title: "Generate Ideas ✨",
-    href: "/generate/new",
-  },
-];
+import { navLinks } from "../landing-page/data";
 
 const NavMenu = ({ className }: { className?: string }) => {
   return (
@@ -30,7 +15,12 @@ const NavMenu = ({ className }: { className?: string }) => {
       <ul className={className}>
         {navLinks.map(({ title, href }) => (
           <NavigationMenuItem key={title}>
-            <Link href={href} legacyBehavior passHref>
+            <Link
+              href={href}
+              legacyBehavior
+              passHref
+              className="bg-transparent"
+            >
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 {title}
               </NavigationMenuLink>

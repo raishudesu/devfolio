@@ -14,6 +14,7 @@ const SignInButtons = () => {
         Sign in
       </Button>
       <Button
+        variant={"secondary"}
         className="p-4 rounded-full"
         onClick={() => router.push("/register")}
       >

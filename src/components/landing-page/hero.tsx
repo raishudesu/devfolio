@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
-import rocket from "../assets/images/landing-page/rocket.svg";
+import rocket from "../../assets/images/landing-page/rocket.svg";
 import { Syne } from "next/font/google";
 import TypeAnimated from "./type-animated";
 
