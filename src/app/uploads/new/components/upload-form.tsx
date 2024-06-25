@@ -58,6 +58,8 @@ const postProjectData = async (
         userId: user?.id,
         projectName: values.projectName,
         description: values.description,
+        githubUrl: values.githubUrl,
+        demoUrl: values.demoUrl,
         images: publicUrls,
         tags: values.tags,
       }),
@@ -106,6 +108,8 @@ const UploadForm = () => {
       projectName: "",
       description: "",
       tags: [],
+      githubUrl: "",
+      demoUrl: "",
       images: [],
     },
   });
@@ -230,6 +234,40 @@ const UploadForm = () => {
                 <FormDescription>
                   Tags can be used for your project to be easily searched.
                 </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="demoUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Demo URL</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. toYourDemoUrl.com"
+                    {...field}
+                    disabled={formState.isSubmitting}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="githubUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Github URL</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="e.g. github.com/johndoe/repository"
+                    {...field}
+                    disabled={formState.isSubmitting}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}

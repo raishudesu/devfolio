@@ -11,6 +11,8 @@ export const createProject = async (data: z.infer<typeof projectSchema>) => {
         userId: data.userId,
         projectName: data.projectName,
         description: data.description,
+        githubUrl: data.githubUrl,
+        demoUrl: data.demoUrl,
         tags: data.tags,
       },
     });

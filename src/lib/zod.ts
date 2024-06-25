@@ -62,6 +62,8 @@ export const projectSchema = z
     userId: z.string({ required_error: "User ID is required" }),
     projectName: z.string({ required_error: "Project name is required" }),
     description: z.string({ required_error: "Description is required" }),
+    githubUrl: z.string().optional(),
+    demoUrl: z.string().optional(),
     images: z.array(z.string()),
     tags: z.array(z.string()),
   })
@@ -107,6 +109,8 @@ export const uploadProjectSchema = z.object({
     .min(2, "Project name must be at least 2 characters")
     .max(55, "Project name must not exceed 55 characters"),
   tags: z.array(z.string()).nonempty("At least one tag is required"),
+  githubUrl: z.string().optional(),
+  demoUrl: z.string().optional(),
   description: z
     .string({ required_error: "Project description is required" })
     .trim()

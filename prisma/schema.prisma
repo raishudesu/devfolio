@@ -26,6 +26,8 @@ model Project {
   user        User     @relation(fields: [userId], references: [id])
   images      Image[]
   tags        String[]
+  githubUrl   String?
+  demoUrl     String?
 }
 
 model Image {

@@ -2,7 +2,7 @@ import { ProjectResponse } from "@/types/types";
 import Image from "next/image";
 import MoreProjects from "./more-projects";
 import { Button } from "@/components/ui/button";
-import { Bookmark, Heart } from "lucide-react";
+import { Bookmark, Heart, SquareArrowOutUpRight } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import Link from "next/link";
@@ -84,9 +84,39 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
             </AspectRatio>
           ))}
 
-          <p className="leading-7 [&:not(:first-child)]:mt-6 text-xl">
+          <p className="leading-7 [&:not(:first-child)]:mt-6 text-lg">
             {project.description}
           </p>
+        </div>
+        <div className="flex gap-6">
+          {project.githubUrl && (
+            <Link
+              href={project.githubUrl as string}
+              target="_blank"
+              className="flex gap-2 items-center"
+            >
+              <div
+                className={`hover:underline font-medium text-lg ${textAnimation}`}
+              >
+                Github
+              </div>
+              <SquareArrowOutUpRight size={15} />
+            </Link>
+          )}
+          {project.demoUrl && (
+            <Link
+              href={project.demoUrl as string}
+              target="_blank"
+              className="flex gap-2 items-center"
+            >
+              <div
+                className={`hover:underline font-medium text-lg ${textAnimation}`}
+              >
+                Demo
+              </div>
+              <SquareArrowOutUpRight size={15} />
+            </Link>
+          )}
         </div>
       </div>
       <Separator />
