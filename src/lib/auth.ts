@@ -50,6 +50,7 @@ export const authOptions: NextAuthOptions = {
           lastName: user.lastName,
           imageLink: user.imageLink,
           bio: user.bio,
+          links: user.links,
         };
       }
 
@@ -70,6 +71,7 @@ export const authOptions: NextAuthOptions = {
           id: token.id,
           imageLink: token.imageLink,
           bio: token.bio,
+          links: token.links,
         },
       };
     },

@@ -146,5 +146,6 @@ export const editDetailsSchema = z.object({
     .max(255)
     .trim()
     .optional(),
+  links: z.array(z.string()),
   bio: z.string().max(255).trim().optional(),
 });

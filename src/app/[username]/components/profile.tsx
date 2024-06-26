@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import CurrentProfileBtns from "./current-user-profile-btns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { textAnimation } from "@/components/landing-page/hero";
+import Link from "next/link";
 
 const getUserProfile = async (username: string): Promise<UserResponse> => {
   const res = await fetch(`http://localhost:3000/api/user/${username}`, {
@@ -53,11 +54,22 @@ const Profile = async ({ username }: { username: string }) => {
                 <span className="text-muted-foreground">Bio not yet set.</span>
               )}
             </p>
-            <div>
-              <small className="text-sm font-medium leading-none text-muted-foreground">
-                1,000 followers 1,000 following 1,000 likes
-              </small>
-            </div>
+            {data?.user.links.length > 0 ? (
+              <div className="flex flex-col gap-2">
+                <small
+                  className={`text-sm font-bold leading-none ${textAnimation}`}
+                >
+                  Links
+                </small>
+                {data.user.links.map((link, index) => (
+                  <Link href={link} key={index}>
+                    <small className="text-sm font-medium leading-none text-muted-foreground hover:underline">
+                      {link}
+                    </small>
+                  </Link>
+                ))}
+              </div>
+            ) : null}
             {isCurrentUser ? (
               <div className="flex flex-col md:flex-row gap-2 md:items-center">
                 <CurrentProfileBtns />

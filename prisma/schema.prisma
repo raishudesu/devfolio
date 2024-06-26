@@ -49,7 +49,7 @@ model User {
   username            String               @unique
   imageLink           String?
   bio                 String?
-  websiteLink         String?
+  links               String[]
   active              Boolean              @default(true)
   projects            Project[]
   geminiConversations GeminiConversation[]

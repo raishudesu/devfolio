@@ -1,9 +1,11 @@
 "use client";
 
+import InputTags from "@/app/uploads/new/components/input-tags";
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -68,6 +70,7 @@ const EditDetails = () => {
     defaultValues: {
       firstName: user?.firstName,
       lastName: user?.lastName,
+      links: user?.links,
       bio: user?.bio || "",
     },
   });
@@ -90,6 +93,7 @@ const EditDetails = () => {
           user: {
             firstName: form.getValues("firstName"),
             lastName: form.getValues("lastName"),
+            links: form.getValues("links"),
             bio: form.getValues("bio"),
           },
         });
@@ -137,6 +141,22 @@ const EditDetails = () => {
                     disabled={formState.isSubmitting}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="links"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Add Links</FormLabel>
+                <FormControl>
+                  <InputTags {...field} />
+                </FormControl>
+                <FormDescription>
+                  Links can be used for potential employers to reach out on you.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
