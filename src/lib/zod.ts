@@ -146,6 +146,9 @@ export const editDetailsSchema = z.object({
     .max(255)
     .trim()
     .optional(),
+  isAvailableForWork: z.boolean(),
   links: z.array(z.string()),
   bio: z.string().max(255).trim().optional(),
 });
+
+export const updateWorkSchema = z.boolean();

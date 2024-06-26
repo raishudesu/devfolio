@@ -42,11 +42,30 @@ const Profile = async ({ username }: { username: string }) => {
             <AvatarFallback className="min-h-32">CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-4 pb-4  max-w-screen-sm ">
-            <h1
-              className={`mt-4 lg:mt-0 scroll-m-20 text-2xl font-bold tracking-tight ${textAnimation}`}
-            >
-              {data?.user.firstName} {data?.user.lastName}
-            </h1>
+            <div className="flex flex-col">
+              <h1
+                className={`mt-4 lg:mt-0 scroll-m-20 text-2xl font-bold tracking-tight ${textAnimation}`}
+              >
+                {data?.user.firstName} {data?.user.lastName}
+              </h1>
+              <div className="mt-2 flex gap-2 items-center">
+                {data.user.isAvailableForWork ? (
+                  <>
+                    <div className="w-2 h-2 bg-green-400 animate-pulse rounded-full"></div>
+                    <small className="text-xs font-medium leading-none text-muted-foreground">
+                      Available for work 🚀{" "}
+                    </small>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-2 h-2 bg-red-400 animate-pulse rounded-full"></div>
+                    <small className="text-xsm text-muted-foreground">
+                      Unavailable for work{" "}
+                    </small>
+                  </>
+                )}
+              </div>
+            </div>
             <p className="leading-7 text-sm">
               {data?.user.bio ? (
                 data.user?.bio

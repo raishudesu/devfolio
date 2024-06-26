@@ -51,6 +51,7 @@ export const authOptions: NextAuthOptions = {
           imageLink: user.imageLink,
           bio: user.bio,
           links: user.links,
+          isAvailableForWork: user.isAvailableForWork,
         };
       }
 
@@ -72,6 +73,7 @@ export const authOptions: NextAuthOptions = {
           imageLink: token.imageLink,
           bio: token.bio,
           links: token.links,
+          isAvailableForWork: token.isAvailableForWork,
         },
       };
     },

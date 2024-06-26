@@ -1,5 +1,9 @@
 import prisma from "@/lib/db";
-import { editDetailsSchema, userServerSchema } from "@/lib/zod";
+import {
+  editDetailsSchema,
+  updateWorkSchema,
+  userServerSchema,
+} from "@/lib/zod";
 import {
   ExistingUserByEmailError,
   ExistingUserByUsername,
@@ -180,6 +184,22 @@ export const updatePassword = async (
 export const updateUserDetails = async (
   usernameParams: string,
   data: z.infer<typeof editDetailsSchema>
+) => {
+  try {
+    await prisma.user.update({
+      where: {
+        username: usernameParams,
+      },
+      data,
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateUserWork = async (
+  usernameParams: string,
+  data: z.infer<typeof updateWorkSchema>
 ) => {
   try {
     await prisma.user.update({

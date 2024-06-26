@@ -53,4 +53,5 @@ model User {
   active              Boolean              @default(true)
   projects            Project[]
   geminiConversations GeminiConversation[]
+  isAvailableForWork  Boolean              @default(false)
 }
