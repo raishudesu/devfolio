@@ -9,6 +9,7 @@ import UserMenu from "./user-menu";
 import Link from "next/link";
 import { Input } from "../ui/input";
 import { textAnimation } from "@/components/landing-page/hero";
+import SearchDialog from "./search-dialog";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
@@ -33,8 +34,8 @@ const Header = async () => {
         </div>
 
         <div className=" flex gap-2 items-center">
-          <div className="hidden md:flex">
-            <Input className="p-6 rounded-full" placeholder="🔎 Search..." />
+          <div className="flex">
+            <SearchDialog />
           </div>
           {session ? null : <SignInButtons />}
           <UserMenu />

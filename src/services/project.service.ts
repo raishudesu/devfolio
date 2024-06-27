@@ -65,6 +65,36 @@ export const getProject = async (id: string) => {
   }
 };
 
+export const searchProjectsByTags = async (tags: string[]) => {
+  try {
+    const projects = await prisma.project.findMany({
+      where: {
+        tags: {
+          hasSome: tags,
+        },
+      },
+      include: {
+        images: true,
+        user: {
+          select: {
+            username: true,
+            firstName: true,
+            lastName: true,
+            imageLink: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return projects;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getProjectsByUser = async (username: string) => {
   try {
     const projects = await prisma.project.findMany({
@@ -83,6 +113,9 @@ export const getProjectsByUser = async (username: string) => {
             imageLink: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 
@@ -105,6 +138,9 @@ export const getProjects = async () => {
             imageLink: true,
           },
         },
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

@@ -151,4 +151,6 @@ export const editDetailsSchema = z.object({
   bio: z.string().max(255).trim().optional(),
 });
 
-export const updateWorkSchema = z.boolean();
+export const searchProjectSchema = z.object({
+  tags: z.array(z.string()),
+});

@@ -4,8 +4,8 @@ export const navLinks: { title: string; href: string }[] = [
     href: "/projects",
   },
   {
-    title: "Top Developers 👨‍💻",
-    href: "/top-developers",
+    title: "Devfoliopers 👨‍💻",
+    href: "/devfoliopers",
   },
   {
     title: "Generate Ideas ✨",
