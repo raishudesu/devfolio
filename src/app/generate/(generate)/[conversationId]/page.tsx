@@ -11,7 +11,7 @@ const getGeminiConversation = async (
 ) => {
   try {
     const res = await fetch(
-      `${apiUrl}/ai/user/${userId}/generation/${conversationId}`
+      `${apiUrl}/api/ai/user/${userId}/generation/${conversationId}`
     );
 
     return await res.json();
