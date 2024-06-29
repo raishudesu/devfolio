@@ -7,9 +7,10 @@ import CurrentProfileBtns from "./current-user-profile-btns";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { textAnimation } from "@/components/landing-page/hero";
 import Link from "next/link";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const getUserProfile = async (username: string): Promise<UserResponse> => {
-  const res = await fetch(`http://localhost:3000/api/user/${username}`, {
+  const res = await fetch(`${apiUrl}/api/user/${username}`, {
     method: "GET",
     cache: "no-store",
   });

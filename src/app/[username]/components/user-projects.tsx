@@ -5,13 +5,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { textAnimation } from "@/components/landing-page/hero";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getUserProjects = async (username: string): Promise<ProjectsResponse> => {
-  const res = await fetch(
-    `http://localhost:3000/api/user/${username}/projects`,
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${apiUrl}/api/user/${username}/projects`, {
+    cache: "no-store",
+  });
   return await res.json();
 };
 
