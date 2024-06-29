@@ -3,8 +3,6 @@ import { GeistSans } from "geist/font/sans";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-import rehypeSanitize from "rehype-sanitize";
 
 const Prompt = ({ response }: { response: string | undefined }) => {
   const { theme } = useTheme();
@@ -25,7 +23,6 @@ const Prompt = ({ response }: { response: string | undefined }) => {
       <MDEditor.Markdown
         source={response}
         remarkPlugins={[remarkGfm]}
-        // rehypePlugins={[rehypeSanitize, ]}
         className={`${GeistSans.className}`}
         style={{
           backgroundColor: markdownTheme.background,

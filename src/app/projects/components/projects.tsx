@@ -12,8 +12,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import { textAnimation } from "@/components/landing-page/hero";
 
+ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getProjects = async (): Promise<ProjectsResponse> => {
-  const data = await fetch("http://localhost:3000/api/project", {
+  const data = await fetch(`${apiUrl}/api/project`, {
     cache: "no-store",
   });
   return await data.json();

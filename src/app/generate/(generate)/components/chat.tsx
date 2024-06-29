@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sparkles } from "lucide-react";
 import { Content } from "@google/generative-ai";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import StartingDisplay from "./starting-display";

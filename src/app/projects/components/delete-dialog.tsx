@@ -12,13 +12,13 @@ import {
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
+ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const deleteProject = async (projectId: string) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/project/${projectId}`, {
+    const res = await fetch(`${apiUrl}/api/project/${projectId}`, {
       method: "DELETE",
     });
-
-    console.log(await res.json());
 
     if (res.ok) {
       toast("Project deleted successfully ✅", {

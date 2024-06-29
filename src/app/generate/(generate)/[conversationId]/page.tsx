@@ -3,13 +3,15 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { notFound } from "next/navigation";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getGeminiConversation = async (
   userId: string,
   conversationId: string
 ) => {
   try {
     const res = await fetch(
-      `http:localhost:3000/api/ai/user/${userId}/generation/${conversationId}`
+      `${apiUrl}/ai/user/${userId}/generation/${conversationId}`
     );
 
     return await res.json();

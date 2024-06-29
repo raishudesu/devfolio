@@ -13,11 +13,13 @@ import ProjectCard from "@/app/projects/components/project-card";
 import { ProjectsResponse } from "@/types/types";
 import { Fragment } from "react";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getProjectsByTags = async (
   tags: string[]
 ): Promise<ProjectsResponse | undefined> => {
   try {
-    const res = await fetch(`http://localhost:3000/api/project/search`, {
+    const res = await fetch(`${apiUrl}/api/project/search`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",

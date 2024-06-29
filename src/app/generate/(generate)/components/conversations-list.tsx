@@ -4,14 +4,13 @@ import { SquarePen } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getGeminiConversations = async (userId: string) => {
   try {
-    const res = await fetch(
-      `http://localhost:3000/api/ai/user/${userId}/generation`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${apiUrl}/api/ai/user/${userId}/generation`, {
+      cache: "no-store",
+    });
     return await res.json();
   } catch (error) {
     console.error(error);
