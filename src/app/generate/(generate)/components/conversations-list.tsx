@@ -7,7 +7,10 @@ import Link from "next/link";
 const getGeminiConversations = async (userId: string) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/ai/user/${userId}/generation`
+      `http://localhost:3000/api/ai/user/${userId}/generation`,
+      {
+        cache: "no-store",
+      }
     );
     return await res.json();
   } catch (error) {

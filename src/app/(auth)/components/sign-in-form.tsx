@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
@@ -23,6 +23,18 @@ import { signInFormSchema } from "@/lib/zod";
 const SignInForm = () => {
   const router = useRouter();
   const query = useSearchParams();
+  const searchParams = query.get("callbackUrl");
+
+  const toastShownRef = useRef(false);
+
+  useEffect(() => {
+    if (searchParams && !toastShownRef.current) {
+      toast("You must sign in to continue.", {
+        position: "top-right",
+      });
+      toastShownRef.current = true; // Mark the toast as shown
+    }
+  }, [searchParams]);
 
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -36,8 +48,6 @@ const SignInForm = () => {
 
   const onSubmit = async (values: z.infer<typeof signInFormSchema>) => {
     try {
-      const searchParams = query.get("callbackUrl");
-
       const res = await signIn("credentials", {
         email: values.email,
         password: values.password,
@@ -56,7 +66,9 @@ const SignInForm = () => {
 
       searchParams ? router.push(searchParams) : router.push("/projects");
 
-      toast("Sign in success ✅");
+      toast("Sign in success ✅", {
+        position: "top-right",
+      });
 
       router.refresh();
     } catch (error) {

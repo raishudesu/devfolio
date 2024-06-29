@@ -1,3 +1,4 @@
+import { authOptions } from "@/lib/auth";
 import { uploadImagesSchema, imageObjectSchema } from "@/lib/zod";
 import {
   addProjectImages,
@@ -5,6 +6,7 @@ import {
   updateImage,
 } from "@/services/image.service";
 import { getProject } from "@/services/project.service";
+import { getServerSession } from "next-auth";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
@@ -32,6 +34,9 @@ export async function GET(req: Request, { params }: { params: Params }) {
 }
 
 export async function POST(req: Request, { params }: { params: Params }) {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   try {
     const { id } = params;
 
@@ -60,39 +65,6 @@ export async function POST(req: Request, { params }: { params: Params }) {
       {
         status: 500,
       }
-    );
-  }
-}
-
-export async function PATCH(req: Request, { params }: { params: Params }) {
-  try {
-    const { id } = params;
-
-    const body = await req.json();
-
-    const { url, projectId } = imageObjectSchema.parse(body);
-
-    const data = {
-      url,
-      projectId,
-    };
-
-    const image = await updateImage(id, data);
-
-    return NextResponse.json(
-      {
-        ok: true,
-        image,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error,
-      },
-      { status: 500 }
     );
   }
 }

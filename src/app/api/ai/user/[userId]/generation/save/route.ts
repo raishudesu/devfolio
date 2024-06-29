@@ -1,9 +1,15 @@
+import { authOptions } from "@/lib/auth";
 import { geminiConversationSchema } from "@/lib/zod";
 import { createGeminiConversation } from "@/services/ai.service";
+import { getServerSession } from "next-auth";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request, { params }: { params: Params }) {
+  const session = getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
   try {
     const { userId } = params;
 

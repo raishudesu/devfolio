@@ -1,8 +1,14 @@
+import { authOptions } from "@/lib/auth";
 import { projectSchema } from "@/lib/zod";
 import { createProject, getProjects } from "@/services/project.service";
+import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
   try {
     const body = await req.json();
 
