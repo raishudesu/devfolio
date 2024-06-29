@@ -18,7 +18,7 @@ export async function GET(req: Request, { params }: { params: Params }) {
       }
     );
   } catch (error) {
-    NextResponse.json(
+    return NextResponse.json(
       {
         ok: false,
         error,

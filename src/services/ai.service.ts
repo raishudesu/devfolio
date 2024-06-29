@@ -1,5 +1,6 @@
 import prisma from "@/lib/db";
 import { geminiConversationSchema } from "@/lib/zod";
+import { UserNotFoundError } from "@/utils/errors";
 import { z } from "zod";
 
 export const createGeminiConversation = async (
@@ -40,6 +41,15 @@ export const updateGeminiConversation = async (
 
 export const getGeminiConversations = async (userId: string) => {
   try {
+    const isUserExists = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!isUserExists)
+      throw new UserNotFoundError(false, "User not found", 404);
+
     const conversations = await prisma.geminiConversation.findMany({
       where: {
         userId,
