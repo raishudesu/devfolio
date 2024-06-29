@@ -10,8 +10,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { textAnimation } from "@/components/landing-page/hero";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getProject = async (projectId: string): Promise<ProjectResponse> => {
-  const data = await fetch(`http://localhost:3000/api/project/${projectId}`, {
+  const data = await fetch(`${apiUrl}/api/project/${projectId}`, {
     cache: "no-store",
   });
   return await data.json();

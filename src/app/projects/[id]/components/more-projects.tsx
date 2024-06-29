@@ -1,13 +1,12 @@
 import { ProjectsResponse } from "@/types/types";
 import ProjectCard from "../../components/project-card";
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const getMoreProjects = async (username: string): Promise<ProjectsResponse> => {
-  const data = await fetch(
-    `http://localhost:3000/api/user/${username}/projects`,
-    {
-      cache: "no-store",
-    }
-  );
+  const data = await fetch(`${apiUrl}/api/user/${username}/projects`, {
+    cache: "no-store",
+  });
 
   return await data.json();
 };
