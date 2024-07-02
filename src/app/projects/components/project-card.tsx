@@ -10,6 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DeleteProjectBtn from "./delete-project-btn";
 import { textAnimation } from "@/components/landing-page/hero";
+import LikeButton from "./like-button";
 
 const ProjectCard = async ({
   projectId,
@@ -17,6 +18,8 @@ const ProjectCard = async ({
   url,
   tags,
   projectName,
+  initialLikes,
+  isLiked,
 }: ProjectCard) => {
   const session = await getServerSession(authOptions);
   const isLoggedInUser = user.username === session?.user.username;
@@ -62,12 +65,12 @@ const ProjectCard = async ({
             {user.firstName} {user.lastName}
           </small>
         </div>
-        <div className="flex items-center gap-2">
-          <Button size="sm" variant={"secondary"}>
-            <Heart size={15} />
-          </Button>
-          <small className="text-xs text-muted-foreground">123</small>
-        </div>
+        <LikeButton
+          userId={user.id}
+          projectId={projectId}
+          initialLikes={initialLikes}
+          isLiked={isLiked}
+        />
       </div>
     </div>
   );

@@ -46,8 +46,10 @@ export const getProject = async (id: string) => {
             firstName: true,
             lastName: true,
             imageLink: true,
+            id: true,
           },
         },
+        likes: true,
       },
     });
 
@@ -81,8 +83,10 @@ export const searchProjectsByTags = async (tags: string[]) => {
             firstName: true,
             lastName: true,
             imageLink: true,
+            id: true,
           },
         },
+        likes: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -111,8 +115,10 @@ export const getProjectsByUser = async (username: string) => {
             firstName: true,
             lastName: true,
             imageLink: true,
+            id: true,
           },
         },
+        likes: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -136,8 +142,10 @@ export const getProjects = async () => {
             firstName: true,
             lastName: true,
             imageLink: true,
+            id: true,
           },
         },
+        likes: true,
       },
       orderBy: {
         createdAt: "desc",
@@ -181,4 +189,32 @@ export const deleteProject = async (id: string) => {
   } catch (error) {
     throw error;
   }
+};
+
+export const likeProject = async (projectId: string, userId: string) => {
+  await getProject(projectId);
+
+  await prisma.projectLike.create({
+    data: {
+      userId,
+      projectId,
+    },
+  });
+
+  return;
+};
+
+export const unlikeProject = async (projectId: string, userId: string) => {
+  await getProject(projectId);
+
+  await prisma.projectLike.delete({
+    where: {
+      userId_projectId: {
+        userId,
+        projectId,
+      },
+    },
+  });
+
+  return;
 };

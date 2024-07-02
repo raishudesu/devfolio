@@ -17,17 +17,28 @@ model GeminiConversation {
 }
 
 model Project {
-  id          String   @id @default(uuid())
+  id          String        @id @default(uuid())
   userId      String
   projectName String
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id])
   images      Image[]
   tags        String[]
   githubUrl   String?
   demoUrl     String?
+  likes       ProjectLike[]
+}
+
+model ProjectLike {
+  id        String  @id @default(uuid())
+  user      User    @relation(fields: [userId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+  userId    String
+  projectId String
+
+  @@unique([userId, projectId])
 }
 
 model Image {
@@ -52,6 +63,7 @@ model User {
   links               String[]
   active              Boolean              @default(true)
   projects            Project[]
+  likes               ProjectLike[]
   geminiConversations GeminiConversation[]
   isAvailableForWork  Boolean              @default(false)
 }

@@ -26,7 +26,7 @@ const MoreProjects = async ({
 
   return (
     <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {moreProjects?.map(({ id, projectName, images, user, tags }) => (
+      {moreProjects?.map(({ id, projectName, images, user, tags, likes }) => (
         <ProjectCard
           projectId={id}
           projectName={projectName}
@@ -34,6 +34,8 @@ const MoreProjects = async ({
           url={images[0].url}
           tags={tags}
           key={id}
+          initialLikes={likes.length}
+          isLiked={likes.some((like) => like.userId === user?.id)}
         />
       ))}
     </div>

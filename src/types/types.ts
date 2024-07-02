@@ -1,10 +1,11 @@
-import type { User, Project, Image } from "@prisma/client";
+import type { User, Project, Image, ProjectLike } from "@prisma/client";
 
 type IncludeUser = {
   username: string;
   firstName: string;
   lastName: string;
   imageLink: string;
+  id: string;
 };
 
 export type ProjectCard = {
@@ -13,11 +14,14 @@ export type ProjectCard = {
   user: IncludeUser;
   url: string;
   tags: string[];
+  initialLikes: number;
+  isLiked: boolean;
 };
 
 export type ProjectType = Project & {
   images: Image[];
   user: IncludeUser;
+  likes: ProjectLike[];
 };
 
 export type RegisterResponse = {
