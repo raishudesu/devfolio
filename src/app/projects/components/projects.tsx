@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import { textAnimation } from "@/components/landing-page/hero";
 
- const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const getProjects = async (): Promise<ProjectsResponse> => {
   const data = await fetch(`${apiUrl}/api/project`, {
@@ -32,28 +32,6 @@ const Projects = async () => {
         >
           Projects
         </h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex gap-2">
-              Filter <ArrowDown size={15} />{" "}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            {/* <DropdownMenuLabel>Filter</DropdownMenuLabel> */}
-            <DropdownMenuCheckboxItem
-            // checked={showStatusBar}
-            // onCheckedChange={setShowStatusBar}
-            >
-              Following
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-            // checked={showStatusBar}
-            // onCheckedChange={setShowStatusBar}
-            >
-              Latest
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.projects?.map(({ id, user, projectName, images, tags }) => (

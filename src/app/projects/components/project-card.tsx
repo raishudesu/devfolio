@@ -9,8 +9,15 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import DeleteProjectBtn from "./delete-project-btn";
+import { textAnimation } from "@/components/landing-page/hero";
 
-const ProjectCard = async ({ projectId, user, url, tags }: ProjectCard) => {
+const ProjectCard = async ({
+  projectId,
+  user,
+  url,
+  tags,
+  projectName,
+}: ProjectCard) => {
   const session = await getServerSession(authOptions);
   const isLoggedInUser = user.username === session?.user.username;
 
@@ -28,14 +35,19 @@ const ProjectCard = async ({ projectId, user, url, tags }: ProjectCard) => {
         </AspectRatio>
       </Link>
       <div className="flex justify-between items-center">
-        <div className="p-2 flex gap-2 flex-wrap">
-          {tags.map((tag, index) => (
-            <Badge variant={"secondary"} key={index}>
-              {tag}
-            </Badge>
-          ))}
-        </div>
+        <h2
+          className={`px-4 mt-2 scroll-m-20 text-xl font-bold tracking-tight first:mt-0 ${textAnimation}`}
+        >
+          {projectName}
+        </h2>
         {isLoggedInUser ? <DeleteProjectBtn projectId={projectId} /> : null}
+      </div>
+      <div className="px-2 pb-2 flex gap-2 flex-wrap">
+        {tags.map((tag, index) => (
+          <Badge variant={"secondary"} key={index}>
+            {tag}
+          </Badge>
+        ))}
       </div>
       <div className="px-2 pb-2 flex justify-between items-center gap-2">
         <div className="flex gap-2 items-center">
@@ -53,10 +65,6 @@ const ProjectCard = async ({ projectId, user, url, tags }: ProjectCard) => {
         <div className="flex items-center gap-2">
           <Button size="sm" variant={"secondary"}>
             <Heart size={15} />
-          </Button>
-          <small className="text-xs text-muted-foreground">123</small>
-          <Button size={"sm"} variant={"secondary"} disabled>
-            <Eye size={15} />
           </Button>
           <small className="text-xs text-muted-foreground">123</small>
         </div>
