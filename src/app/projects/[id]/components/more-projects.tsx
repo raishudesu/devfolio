@@ -1,5 +1,7 @@
 import { ProjectsResponse } from "@/types/types";
 import ProjectCard from "../../components/project-card";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -18,6 +20,7 @@ const MoreProjects = async ({
   projectId: string;
   username: string;
 }) => {
+  const session = await getServerSession(authOptions);
   const data = await getMoreProjects(username);
 
   const moreProjects = data?.projects.filter(
@@ -35,7 +38,7 @@ const MoreProjects = async ({
           tags={tags}
           key={id}
           initialLikes={likes.length}
-          isLiked={likes.some((like) => like.userId === user?.id)}
+          isLiked={likes.some((like) => like.userId === session?.user?.id)}
         />
       ))}
     </div>

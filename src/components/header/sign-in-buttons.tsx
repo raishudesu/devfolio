@@ -6,7 +6,7 @@ const SignInButtons = () => {
   const router = useRouter();
 
   return (
-    <div className="flex gap-2">
+    <div className="w-full flex flex-col md:flex-row gap-2">
       <Button
         className="p-4 rounded-full"
         onClick={() => router.push("/sign-in")}

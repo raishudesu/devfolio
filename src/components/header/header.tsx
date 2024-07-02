@@ -37,7 +37,9 @@ const Header = async () => {
           <div className="flex">
             <SearchDialog />
           </div>
-          {session ? null : <SignInButtons />}
+          <div className="hidden md:flex">
+            {session ? null : <SignInButtons />}
+          </div>
           <UserMenu />
           <div className="hidden md:flex">
             <ModeToggle />

@@ -9,6 +9,10 @@ import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { textAnimation } from "@/components/landing-page/hero";
+import LikeButton from "../../components/like-button";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import ProfileBtn from "./profile-btn";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -20,6 +24,7 @@ const getProject = async (projectId: string): Promise<ProjectResponse> => {
 };
 
 const ProjectDetails = async ({ projectId }: { projectId: string }) => {
+  const session = await getServerSession(authOptions);
   const data = await getProject(projectId);
   const { project } = data;
   return (
@@ -52,13 +57,16 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
             </div>
 
             <div className="flex gap-2">
-              <Button className="p-6 rounded-full">View profile</Button>
-              <Button className="p-6 rounded-full" variant={"secondary"}>
-                <Heart size={20} />
-              </Button>
-              <Button className="p-6 rounded-full" variant={"secondary"}>
-                <Bookmark size={20} />
-              </Button>
+              <ProfileBtn username={project.user.username} />
+              <LikeButton
+                projectId={project.id}
+                userId={project.user.id}
+                initialLikes={project.likes.length}
+                isLiked={project.likes.some(
+                  (like) => like.userId === session?.user?.id
+                )}
+                onProject
+              />
             </div>
           </div>
         </div>

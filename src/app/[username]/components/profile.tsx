@@ -94,20 +94,20 @@ const Profile = async ({ username }: { username: string }) => {
               <div className="flex flex-col md:flex-row gap-2 md:items-center">
                 <CurrentProfileBtns />
               </div>
-            ) : (
-              <div className="flex flex-col md:flex-row gap-2">
-                <Button className="p-6 rounded-full" size={"lg"}>
-                  Get in touch
-                </Button>
-                <Button
-                  className="p-6 rounded-full"
-                  size={"lg"}
-                  variant={"secondary"}
-                >
-                  Follow
-                </Button>
-              </div>
-            )}
+            ) : // <div className="flex flex-col md:flex-row gap-2">
+            //   <Button className="p-6 rounded-full" size={"lg"}>
+            //     Get in touch
+            //   </Button>
+            //   <Button
+            //     className="p-6 rounded-full"
+            //     size={"lg"}
+            //     variant={"secondary"}
+            //   >
+            //     Follow
+            //   </Button>
+            // </div>
+
+            null}
           </div>
         </div>
       </div>

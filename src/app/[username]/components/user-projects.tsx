@@ -40,7 +40,9 @@ const UserProjects = async ({ username }: { username: string }) => {
                 tags={tags}
                 key={id}
                 initialLikes={likes.length}
-                isLiked={likes.some((like) => like.userId === user?.id)}
+                isLiked={likes.some(
+                  (like) => like.userId === session?.user?.id
+                )}
               />
             ))
           ) : (
