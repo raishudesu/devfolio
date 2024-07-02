@@ -9,19 +9,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const deleteProject = async (projectId: string) => {
+const deleteConvo = async (userId: string, conversationId: string) => {
   try {
-    const res = await fetch(`${apiUrl}/api/project/${projectId}`, {
-      method: "DELETE",
-    });
+    const res = await fetch(
+      `${apiUrl}/api/ai/user/${userId}/generation/${conversationId}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     if (res.ok) {
-      toast("Project deleted successfully ✅", {
+      toast("Conversation deleted successfully ✅", {
         position: "top-right",
       });
     }
@@ -38,11 +42,12 @@ const deleteProject = async (projectId: string) => {
   }
 };
 
-const DeleteDialog = ({ projectId }: { projectId: string }) => {
+const DeleteConvoDialog = ({ conversationId }: { conversationId: string }) => {
+  const session = useSession();
   const router = useRouter();
   const handleDelete = async () => {
-    await deleteProject(projectId);
-
+    await deleteConvo(session.data?.user.id as string, conversationId);
+    router.replace("/generate/new");
     router.refresh();
   };
   return (
@@ -66,4 +71,4 @@ const DeleteDialog = ({ projectId }: { projectId: string }) => {
   );
 };
 
-export default DeleteDialog;
+export default DeleteConvoDialog;

@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { geminiConversationSchema } from "@/lib/zod";
 import {
+  deleteGeminiConversation,
   getGeminiConversation,
   updateGeminiConversation,
 } from "@/services/ai.service";
@@ -63,6 +64,36 @@ export async function PATCH(req: Request, { params }: { params: Params }) {
       {
         ok: false,
         error,
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function DELETE(req: Request, { params }: { params: Params }) {
+  const session = await getServerSession(authOptions);
+  if (!session)
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+
+  try {
+    const { conversationId } = params;
+
+    await deleteGeminiConversation(conversationId);
+
+    return NextResponse.json(
+      {
+        ok: true,
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
       },
       {
         status: 500,

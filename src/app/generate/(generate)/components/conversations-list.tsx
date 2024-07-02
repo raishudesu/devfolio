@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { SquarePen } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
+import DeleteConvoBtn from "./delete-convo-btn";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -46,13 +47,18 @@ const ConversationList = async () => {
           </small>
         ) : null}
         {res.content.map(({ id, content }: { id: string; content: string }) => (
-          <Link
-            href={`/generate/${id}`}
+          <div
+            className="flex items-center justify-between bg-card w-full border rounded-md py-3 px-6 text-clip overflow-hidden hover:border-primary ease-in-out transition"
             key={id}
-            className="text-sm text-muted-foreground bg-card w-full border rounded-md py-4 px-6 text-clip overflow-hidden hover:border-primary ease-in-out transition"
           >
-            {JSON.parse(content)[0].parts[0].text}
-          </Link>
+            <Link
+              href={`/generate/${id}`}
+              className="text-sm text-muted-foreground "
+            >
+              {JSON.parse(content)[0].parts[0].text}
+            </Link>
+            <DeleteConvoBtn conversationId={id} />
+          </div>
         ))}
       </div>
     </aside>

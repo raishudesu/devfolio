@@ -82,3 +82,13 @@ export const getGeminiConversation = async (
     throw error;
   }
 };
+
+export const deleteGeminiConversation = async (conversationId: string) => {
+  await prisma.geminiConversation.delete({
+    where: {
+      id: conversationId,
+    },
+  });
+
+  return;
+};

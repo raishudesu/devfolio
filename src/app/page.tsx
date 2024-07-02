@@ -1,8 +1,15 @@
 import CtaEnd from "@/components/landing-page/cta-end";
 import Features from "@/components/landing-page/features";
 import Hero from "@/components/landing-page/hero";
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 const Home = async () => {
+  const session = await getServerSession(authOptions);
+
+  if (session) redirect("/projects");
+
   return (
     <div>
       <section className="max-w-screen-lg">
