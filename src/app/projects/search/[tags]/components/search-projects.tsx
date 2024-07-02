@@ -1,17 +1,9 @@
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
 import { textAnimation } from "@/components/landing-page/hero";
 import ProjectCard from "@/app/projects/components/project-card";
 import { ProjectsResponse } from "@/types/types";
 import { Fragment } from "react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -37,7 +29,10 @@ const getProjectsByTags = async (
 };
 
 const SearchProjects = async ({ params }: { params: { tags: string } }) => {
-  console.log(params.tags);
+  const session = await getServerSession(authOptions);
+
+  const currentUser = session?.user;
+
   const decodedTags = decodeURIComponent(params.tags);
   const tagsArray = decodedTags.split("+");
 
@@ -46,7 +41,6 @@ const SearchProjects = async ({ params }: { params: { tags: string } }) => {
   return (
     <section className="w-full my-6">
       <div className="pb-6 flex items-center justify-between">
-        {/* <div className="flex gap-2"> */}
         <h1
           className={`scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 ${textAnimation}`}
         >
@@ -58,44 +52,28 @@ const SearchProjects = async ({ params }: { params: { tags: string } }) => {
             </Fragment>
           ))}
         </h1>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="flex gap-2">
-              Filter <ArrowDown size={15} />{" "}
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            {/* <DropdownMenuLabel>Filter</DropdownMenuLabel> */}
-            <DropdownMenuCheckboxItem
-            // checked={showStatusBar}
-            // onCheckedChange={setShowStatusBar}
-            >
-              Latest
-            </DropdownMenuCheckboxItem>
-            <DropdownMenuCheckboxItem
-            // checked={showStatusBar}
-            // onCheckedChange={setShowStatusBar}
-            >
-              Oldest
-            </DropdownMenuCheckboxItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.projects?.map(({ id, user, projectName, images, tags }) => (
-          <div key={id}>
-            {images ? (
-              <ProjectCard
-                projectId={id}
-                projectName={projectName}
-                url={images[0].url}
-                user={user}
-                tags={tags}
-                key={id}
-              />
-            ) : null}
-          </div>
-        ))}
+        {data?.projects?.map(
+          ({ id, user, projectName, images, tags, likes }) => (
+            <div key={id}>
+              {images ? (
+                <ProjectCard
+                  projectId={id}
+                  projectName={projectName}
+                  url={images[0].url}
+                  user={user}
+                  tags={tags}
+                  key={id}
+                  initialLikes={likes.length}
+                  isLiked={likes.some(
+                    (like) => like.userId === currentUser?.id
+                  )}
+                />
+              ) : null}
+            </div>
+          )
+        )}
       </div>
     </section>
   );

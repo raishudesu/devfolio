@@ -1,15 +1,5 @@
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import ProjectCard from "./project-card";
 import { ProjectsResponse } from "@/types/types";
-import { Button } from "@/components/ui/button";
-import { ArrowDown } from "lucide-react";
 import { textAnimation } from "@/components/landing-page/hero";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
