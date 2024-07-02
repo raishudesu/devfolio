@@ -5,6 +5,7 @@ import { Heart } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 const LikeButton = ({
   userId,
@@ -24,25 +25,41 @@ const LikeButton = ({
   const session = useSession();
   const router = useRouter();
 
-  const handleLike = async () => {
+  type LikeType = Response & {
+    ok: boolean;
+  };
+
+  const handleLike = async (): Promise<LikeType | undefined> => {
     if (session.status === "unauthenticated") {
       router.replace("/sign-in");
       return;
     }
     try {
-      const response = liked
-        ? await fetch(`/api/project/${projectId}/user/${userId}/likes`, {
-            method: "DELETE",
-          })
-        : await fetch(`/api/project/${projectId}/user/${userId}/likes`, {
-            method: "POST",
-          });
+      const response: Response = liked
+        ? await fetch(
+            `/api/project/${projectId}/user/${session.data?.user.id}/likes`,
+            {
+              method: "DELETE",
+            }
+          )
+        : await fetch(
+            `/api/project/${projectId}/user/${session.data?.user.id}/likes`,
+            {
+              method: "POST",
+            }
+          );
 
-      if (response.ok) {
+      const data = (await response.json()) as any;
+
+      if (data.ok) {
         setLikes(liked ? likes - 1 : likes + 1);
         setLiked(!liked);
       } else {
-        console.error("Failed to like/unlike project");
+        toast("Something went wrong ❌", {
+          description: data.error || "Failed to like/unlike project",
+          position: "top-right",
+        });
+        console.error("Failed to like/unlike project", data.error);
       }
     } catch (error) {
       console.error("Error liking/unliking project", error);

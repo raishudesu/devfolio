@@ -191,17 +191,29 @@ export const deleteProject = async (id: string) => {
   }
 };
 
-export const likeProject = async (projectId: string, userId: string) => {
-  await getProject(projectId);
+export const likeProject = async (
+  projectId: string,
+  userId: string,
+  loggedInUserId: string
+) => {
+  const project = await getProject(projectId);
 
-  await prisma.projectLike.create({
-    data: {
-      userId,
-      projectId,
-    },
-  });
+  if (project.userId === loggedInUserId) {
+    throw new Error("You cannot like your own project");
+  }
 
-  return;
+  try {
+    await prisma.projectLike.create({
+      data: {
+        projectId,
+        userId,
+      },
+    });
+
+    return;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const unlikeProject = async (projectId: string, userId: string) => {
