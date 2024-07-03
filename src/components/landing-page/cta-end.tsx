@@ -12,7 +12,7 @@ const CtaEnd = () => {
       <p className="text-lg leading-normal dark:text-muted-foreground [&:not(:first-child)]:mt-6 text-center light:text-zinc-900">
         Start by creating an account on the platform.
       </p>
-      <div className="mt-6">
+      <div className="w-full mt-6">
         <SignInButtons />
       </div>
     </div>
