@@ -263,3 +263,41 @@ export const deleteUser = async (username: string) => {
     throw error;
   }
 };
+
+export const getUsersByProjectLikes = async () => {
+  const usersWithLikes = await prisma.user.findMany({
+    select: {
+      username: true,
+      firstName: true,
+      lastName: true,
+      isAvailableForWork: true,
+      imageLink: true,
+      projects: {
+        select: {
+          _count: {
+            select: {
+              likes: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  // Calculate the sum of likes for each user and filter out users with zero likes
+  const usersWithLikesSum = usersWithLikes
+    .map((user) => ({
+      ...user,
+      totalLikes: user.projects.reduce(
+        (sum, project) => sum + project._count.likes,
+        0
+      ),
+    }))
+    .filter((user) => user.totalLikes > 0);
+
+  // Sort users by the total likes and get the top 10
+  usersWithLikesSum.sort((a, b) => b.totalLikes - a.totalLikes);
+  const topUsers = usersWithLikesSum.slice(0, 10);
+
+  return topUsers;
+};
