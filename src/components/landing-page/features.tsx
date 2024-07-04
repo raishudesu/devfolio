@@ -6,22 +6,22 @@ const featureList = [
   {
     title: "Generative AI Integration ✨",
     desc: "Devfolio uses Google's Gemini API to assist aspiring developers to ideate their next project.",
-    link: "/generate/new"
+    link: "/generate/new",
   },
   {
-    title: "Project Showcase 🏢",
+    title: "Project Showcase ✔️",
     desc: "Present your projects in detail, including clear descriptions, screenshots, and links to live demos.",
-    link: "/projects"
+    link: "/projects",
   },
   {
     title: "Connect with Developers ⚡",
     desc: "Discover other developers' projects, find inspiration, and create connections.",
-    link: "/top-developers"
+    link: "/top-developers",
   },
   {
     title: "Your Portfolio 📖",
     desc: "Devfolio helps you stand out from the crowd with dedicated features to showcase your talent to the right recruiters.",
-    link: "/profile"
+    link: "/profile",
   },
 ];
 

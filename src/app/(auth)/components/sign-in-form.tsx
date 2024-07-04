@@ -60,6 +60,7 @@ const SignInForm = () => {
           style: {
             color: "red",
           },
+          position: "top-right",
         });
         return;
       }

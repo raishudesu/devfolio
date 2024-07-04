@@ -48,9 +48,22 @@ const ProjectDetails = async ({ projectId }: { projectId: string }) => {
                   >
                     {project.user.firstName} {project.user.lastName}
                   </Link>
-                  <div className="flex gap-2 items-center">
-                    <div className="w-2 h-2 bg-green-400 animate-pulse rounded-full"></div>
-                    <small>Available for work 🚀 </small>
+                  <div className="mt-2 flex gap-2 items-center">
+                    {project.user.isAvailableForWork ? (
+                      <>
+                        <div className="w-2 h-2 bg-green-400 animate-pulse rounded-full"></div>
+                        <small className="text-xs font-medium leading-none text-muted-foreground">
+                          Available for work 🚀{" "}
+                        </small>
+                      </>
+                    ) : (
+                      <>
+                        <div className="w-2 h-2 bg-red-400 animate-pulse rounded-full"></div>
+                        <small className="text-xsm text-muted-foreground">
+                          Unavailable for work{" "}
+                        </small>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
