@@ -6,7 +6,7 @@ const UserPage = ({ params }: { params: { username: string } }) => {
   const { username } = params;
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="min-h-screen w-full flex flex-col items-center">
       <Profile username={username} />
       <Separator className="max-w-screen-xl" />
       <UserProjects username={username} />

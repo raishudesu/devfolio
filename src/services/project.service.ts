@@ -47,6 +47,7 @@ export const getProject = async (id: string) => {
             lastName: true,
             imageLink: true,
             id: true,
+            isAvailableForWork: true,
           },
         },
         likes: true,
