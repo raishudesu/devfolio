@@ -14,9 +14,9 @@ const featureList = [
     link: "/projects",
   },
   {
-    title: "Connect with Developers ⚡",
-    desc: "Discover other developers' projects, find inspiration, and create connections.",
-    link: "/top-developers",
+    title: "Connect with Devfoliopers ⚡",
+    desc: "Discover other top developers' projects, find inspiration, and create connections.",
+    link: "/devfoliopers",
   },
   {
     title: "Your Portfolio 📖",
