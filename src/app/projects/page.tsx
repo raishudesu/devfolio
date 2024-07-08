@@ -3,7 +3,7 @@ import Projects from "./components/projects";
 
 const ProjectsPage = () => {
   return (
-    <div className="w-full max-w-screen-xl px-2">
+    <div className="w-full min-h-screen max-w-screen-xl px-2">
       <Projects />
     </div>
   );

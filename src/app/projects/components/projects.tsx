@@ -29,7 +29,7 @@ const Projects = async () => {
           Projects
         </h1>
       </div>
-      <div className="w-full min-h-screen grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.projects?.map(
           ({ id, user, projectName, images, tags, likes }) => (
             <div key={id}>
