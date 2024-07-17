@@ -26,7 +26,7 @@ const Projects = async () => {
         <h1
           className={`scroll-m-20 text-3xl font-semibold tracking-tight first:mt-0 ${textAnimation}`}
         >
-          Projects
+          Discover
         </h1>
       </div>
       <div className="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4">
