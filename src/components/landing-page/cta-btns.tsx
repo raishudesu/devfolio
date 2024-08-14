@@ -24,5 +24,6 @@ const CtaBtns = () => {
     </>
   );
 };
+``;
 
 export default CtaBtns;

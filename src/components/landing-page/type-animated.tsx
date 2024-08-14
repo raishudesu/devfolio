@@ -19,7 +19,7 @@ const TypeAnimated = () => {
       wrapper="span"
       cursor={true}
       repeat={Infinity}
-      className={`${textAnimation} text-5xl md:text-6xl font-bold`}
+      className={`${textAnimation} text-5xl md:text-6xl font-semibold`}
     />
   );
 };
